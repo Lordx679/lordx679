@@ -71,7 +71,18 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getProjects(category?: string, search?: string, limit = 50, offset = 0): Promise<Project[]> {
-    let query = db
+    // Build where conditions
+    const whereConditions = [eq(projects.isPublished, true)];
+    
+    if (category && category !== 'all') {
+      whereConditions.push(eq(projects.category, category));
+    }
+    
+    if (search) {
+      whereConditions.push(ilike(projects.title, `%${search}%`));
+    }
+
+    const result = await db
       .select({
         id: projects.id,
         title: projects.title,
@@ -80,6 +91,8 @@ export class DatabaseStorage implements IStorage {
         category: projects.category,
         githubUrl: projects.githubUrl,
         imageUrl: projects.imageUrl,
+        projectFileUrl: projects.projectFileUrl,
+        additionalImageUrl: projects.additionalImageUrl,
         features: projects.features,
         installationSteps: projects.installationSteps,
         authorId: projects.authorId,
@@ -90,23 +103,7 @@ export class DatabaseStorage implements IStorage {
         updatedAt: projects.updatedAt,
       })
       .from(projects)
-      .where(eq(projects.isPublished, true));
-
-    if (category && category !== 'all') {
-      query = query.where(and(eq(projects.isPublished, true), eq(projects.category, category)));
-    }
-
-    if (search) {
-      query = query.where(
-        and(
-          eq(projects.isPublished, true),
-          category && category !== 'all' ? eq(projects.category, category) : undefined,
-          ilike(projects.title, `%${search}%`)
-        )
-      );
-    }
-
-    const result = await query
+      .where(and(...whereConditions))
       .orderBy(desc(projects.createdAt))
       .limit(limit)
       .offset(offset);
@@ -132,6 +129,8 @@ export class DatabaseStorage implements IStorage {
         category: projects.category,
         githubUrl: projects.githubUrl,
         imageUrl: projects.imageUrl,
+        projectFileUrl: projects.projectFileUrl,
+        additionalImageUrl: projects.additionalImageUrl,
         features: projects.features,
         installationSteps: projects.installationSteps,
         authorId: projects.authorId,

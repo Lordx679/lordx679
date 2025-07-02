@@ -37,6 +37,24 @@ export default function Home() {
 
   const { data: projects = [], isLoading: projectsLoading, refetch } = useQuery<Project[]>({
     queryKey: ["/api/projects", selectedCategory, searchQuery],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (selectedCategory && selectedCategory !== 'all') {
+        params.append('category', selectedCategory);
+      }
+      if (searchQuery) {
+        params.append('search', searchQuery);
+      }
+      
+      const url = `/api/projects${params.toString() ? '?' + params.toString() : ''}`;
+      const res = await fetch(url, { credentials: 'include' });
+      
+      if (!res.ok) {
+        throw new Error(`${res.status}: ${res.statusText}`);
+      }
+      
+      return await res.json();
+    },
     enabled: isAuthenticated,
     retry: false,
   });
