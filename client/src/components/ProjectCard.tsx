@@ -10,6 +10,8 @@ import type { Project, User } from "@shared/schema";
 interface ProjectCardProps {
   project: Project;
   onViewDetails: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
 const categoryStyles = {
@@ -19,11 +21,14 @@ const categoryStyles = {
   templates: { bg: 'bg-purple-500/20', text: 'text-purple-400', label: 'قالب' },
 };
 
-export default function ProjectCard({ project, onViewDetails }: ProjectCardProps) {
+export default function ProjectCard({ project, onViewDetails, onEdit, onDelete }: ProjectCardProps) {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [isLiked, setIsLiked] = useState(false);
+  
+  // Check if current user is admin - using user data from useAuth
+  const isAdmin = user && user.id === "190771533";
 
   const categoryStyle = categoryStyles[project.category as keyof typeof categoryStyles] || categoryStyles.bots;
 
@@ -76,6 +81,51 @@ export default function ProjectCard({ project, onViewDetails }: ProjectCardProps
   const handleLike = (e: React.MouseEvent) => {
     e.stopPropagation();
     likeMutation.mutate();
+  };
+
+  const deleteMutation = useMutation({
+    mutationFn: async () => {
+      await apiRequest("DELETE", `/api/projects/${project.id}`);
+    },
+    onSuccess: () => {
+      toast({
+        title: "تم الحذف",
+        description: "تم حذف المشروع بنجاح",
+      });
+      queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/stats"] });
+      if (onDelete) onDelete();
+    },
+    onError: (error) => {
+      if (isUnauthorizedError(error)) {
+        toast({
+          title: "غير مصرح",
+          description: "تم تسجيل خروجك. جاري تسجيل الدخول مرة أخرى...",
+          variant: "destructive",
+        });
+        setTimeout(() => {
+          window.location.href = "/api/login";
+        }, 500);
+        return;
+      }
+      toast({
+        title: "خطأ",
+        description: "فشل في حذف المشروع",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (window.confirm('هل أنت متأكد من حذف هذا المشروع؟')) {
+      deleteMutation.mutate();
+    }
+  };
+
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onEdit) onEdit();
   };
 
   const defaultImage = "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=400";
@@ -132,13 +182,38 @@ export default function ProjectCard({ project, onViewDetails }: ProjectCardProps
           </div>
         </div>
         
-        <div className="flex space-x-3 space-x-reverse">
+        <div className="flex space-x-2 space-x-reverse">
           <Button
             onClick={onViewDetails}
             className="flex-1 bg-discord-blurple hover:bg-blue-600 transition-colors"
           >
             عرض التفاصيل
           </Button>
+          
+          {/* Admin buttons */}
+          {isAdmin && onEdit && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleEdit}
+              className="bg-discord-dark hover:bg-discord-darker border-discord-dark text-discord-yellow hover:text-yellow-400"
+            >
+              <i className="fas fa-edit"></i>
+            </Button>
+          )}
+          
+          {isAdmin && onDelete && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleDelete}
+              disabled={deleteMutation.isPending}
+              className="bg-discord-dark hover:bg-discord-darker border-discord-dark text-discord-red hover:text-red-400"
+            >
+              <i className={`fas fa-trash ${deleteMutation.isPending ? 'animate-pulse' : ''}`}></i>
+            </Button>
+          )}
+          
           {project.githubUrl && (
             <Button
               variant="outline"

@@ -18,6 +18,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
 
 
 
@@ -422,6 +423,13 @@ export default function Home() {
                       key={project.id}
                       project={project}
                       onViewDetails={() => setSelectedProject(project.id)}
+                      onEdit={() => setEditingProject(project)}
+                      onDelete={() => {
+                        // Refresh projects list after deletion
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 1000);
+                      }}
                     />
                   ))}
                 </div>
@@ -437,6 +445,35 @@ export default function Home() {
           projectId={selectedProject}
           onClose={() => setSelectedProject(null)}
         />
+      )}
+
+      {/* Project Edit Modal */}
+      {editingProject && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-discord-elevated rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold">تحديث المشروع</h2>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setEditingProject(null)}
+                  className="bg-discord-dark border-discord-dark"
+                >
+                  <i className="fas fa-times"></i>
+                </Button>
+              </div>
+              <AdminDashboard
+                stats={{ totalProjects: 0, totalUsers: 0, totalViews: 0 }}
+                onProjectAdded={() => {
+                  setEditingProject(null);
+                  window.location.reload();
+                }}
+                editingProject={editingProject}
+              />
+            </div>
+          </div>
+        </div>
       )}
     </motion.div>
   );

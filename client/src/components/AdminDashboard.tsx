@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { isUnauthorizedError } from "@/lib/authUtils";
-import { insertProjectSchema, type InsertProject } from "@shared/schema";
+import { insertProjectSchema, type InsertProject, type Project } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,15 +20,27 @@ interface AdminDashboardProps {
     totalViews: number;
   };
   onProjectAdded: () => void;
+  editingProject?: Project;
 }
 
-export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboardProps) {
+export default function AdminDashboard({ stats, onProjectAdded, editingProject }: AdminDashboardProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const form = useForm<InsertProject>({
     resolver: zodResolver(insertProjectSchema),
-    defaultValues: {
+    defaultValues: editingProject ? {
+      title: editingProject.title,
+      description: editingProject.description,
+      fullDescription: editingProject.fullDescription || "",
+      category: editingProject.category,
+      githubUrl: editingProject.githubUrl || "",
+      imageUrl: editingProject.imageUrl || "",
+      features: editingProject.features || [],
+      installationSteps: editingProject.installationSteps || "",
+      authorId: editingProject.authorId,
+      isPublished: editingProject.isPublished,
+    } : {
       title: "",
       description: "",
       fullDescription: "",
@@ -44,12 +56,16 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
 
   const createProjectMutation = useMutation({
     mutationFn: async (data: InsertProject) => {
-      await apiRequest("POST", "/api/projects", data);
+      if (editingProject) {
+        await apiRequest("PUT", `/api/projects/${editingProject.id}`, data);
+      } else {
+        await apiRequest("POST", "/api/projects", data);
+      }
     },
     onSuccess: () => {
       toast({
-        title: "تم إنشاء المشروع",
-        description: "تم نشر المشروع بنجاح",
+        title: editingProject ? "تم تحديث المشروع" : "تم إنشاء المشروع",
+        description: editingProject ? "تم تحديث المشروع بنجاح" : "تم نشر المشروع بنجاح",
       });
       form.reset();
       onProjectAdded();
