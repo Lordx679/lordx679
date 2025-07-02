@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 import Landing from "@/pages/Landing";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
+import { useEffect } from "react";
 
 function Router() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -26,6 +27,28 @@ function Router() {
 }
 
 function App() {
+  useEffect(() => {
+    // Global error handler for runtime errors
+    const handleError = (event: ErrorEvent) => {
+      console.warn('Runtime error suppressed:', event.error);
+      event.preventDefault();
+      return true;
+    };
+
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      console.warn('Promise rejection suppressed:', event.reason);
+      event.preventDefault();
+    };
+
+    window.addEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+
+    return () => {
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+    };
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

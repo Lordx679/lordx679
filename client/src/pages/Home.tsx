@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -20,8 +20,9 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
 
-  const handleCategoryChange = (category: string) => {
+  const handleCategoryChange = useCallback((category: string) => {
     try {
+      if (category === selectedCategory) return;
       setSelectedCategory(category);
     } catch (error) {
       console.error('Error setting category:', error);
@@ -31,7 +32,7 @@ export default function Home() {
         variant: "destructive",
       });
     }
-  };
+  }, [selectedCategory, toast]);
 
   // Redirect to home if not authenticated
   useEffect(() => {

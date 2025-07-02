@@ -16,6 +16,10 @@ const categories = [
 export default function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryFilterProps) {
   const handleCategoryClick = (categoryId: string) => {
     try {
+      // Prevent double clicks
+      if (categoryId === selectedCategory) {
+        return;
+      }
       onCategoryChange(categoryId);
     } catch (error) {
       console.error('Error changing category:', error);
