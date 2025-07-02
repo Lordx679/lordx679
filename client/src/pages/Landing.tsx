@@ -200,21 +200,21 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: "fas fa-robot",
+                icon: "fas fa-code",
                 title: "مشاريع متطورة",
                 description: "اكتشف مجموعة واسعة من المشاريع المطورة بأحدث التقنيات",
                 color: "from-discord-pink via-discord-purple to-discord-blurple",
                 delay: 0
               },
               {
-                icon: "fas fa-palette",
+                icon: "fas fa-paint-brush",
                 title: "تصاميم مبتكرة",
                 description: "استلهم من أفضل التصاميم والواجهات العصرية",
                 color: "from-discord-cyan via-discord-green to-discord-yellow",
                 delay: 0.2
               },
               {
-                icon: "fas fa-tools",
+                icon: "fas fa-toolbox",
                 title: "أدوات مفيدة",
                 description: "استخدم أدوات وقوالب جاهزة لتطوير مشاريعك",
                 color: "from-discord-orange via-discord-red to-discord-pink",
@@ -272,21 +272,25 @@ export default function Landing() {
               { 
                 number: stats?.totalProjects?.toLocaleString() || "0", 
                 label: "مشروع مميز", 
+                icon: "fas fa-project-diagram",
                 color: "from-discord-pink via-discord-purple to-discord-cyan" 
               },
               { 
                 number: stats?.totalUsers?.toLocaleString() || "0", 
                 label: "مطور نشط", 
+                icon: "fas fa-users",
                 color: "from-discord-green via-discord-yellow to-discord-orange" 
               },
               { 
                 number: stats?.totalViews?.toLocaleString() || "0", 
                 label: "مشاهدة إجمالية", 
+                icon: "fas fa-eye",
                 color: "from-discord-cyan via-discord-blurple to-discord-pink" 
               },
               { 
                 number: "24/7", 
                 label: "دعم فني", 
+                icon: "fas fa-headset",
                 color: "from-discord-red via-discord-orange to-discord-yellow" 
               }
             ].map((stat, index) => (
@@ -308,6 +312,13 @@ export default function Landing() {
                   className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 group-hover:border-white/40 transition-all duration-300"
                   whileHover={{ boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)" }}
                 >
+                  <motion.div 
+                    className={`w-16 h-16 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
+                    whileHover={{ rotate: 15, scale: 1.1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <i className={`${stat.icon} text-white text-2xl`}></i>
+                  </motion.div>
                   <motion.h3 
                     className={`text-4xl md:text-5xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}
                     animate={{ 
