@@ -9,7 +9,7 @@ import { insertProjectSchema, type InsertProject } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -169,19 +169,18 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>فئة المشروع</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger className="bg-discord-dark text-white border-discord-dark">
-                                  <SelectValue placeholder="اختر فئة المشروع" />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent className="bg-discord-dark border-discord-dark">
-                                <SelectItem value="bots">بوت</SelectItem>
-                                <SelectItem value="servers">خادم</SelectItem>
-                                <SelectItem value="tools">أداة</SelectItem>
-                                <SelectItem value="templates">قالب</SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <FormControl>
+                              <select
+                                {...field}
+                                className="w-full px-3 py-2 bg-discord-dark text-white border border-discord-dark rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-discord-blurple"
+                              >
+                                <option value="">اختر فئة المشروع</option>
+                                <option value="bots">🤖 بوت</option>
+                                <option value="servers">🖥️ خادم</option>
+                                <option value="tools">🔧 أداة</option>
+                                <option value="templates">📋 قالب</option>
+                              </select>
+                            </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
