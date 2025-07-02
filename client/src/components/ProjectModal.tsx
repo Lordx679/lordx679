@@ -178,9 +178,6 @@ export default function ProjectModal({ projectId, onClose }: ProjectModalProps) 
                   تحميل المشروع
                 </Button>
               )}
-              {/* Debug info - temporary */}
-              {console.log('Project File URL:', project.projectFileUrl)}
-              {console.log('Full Project Data:', project)}
             </div>
             
             <div className="flex space-x-2 space-x-reverse">

@@ -14,12 +14,20 @@ const categories = [
 ];
 
 export default function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryFilterProps) {
+  const handleCategoryClick = (categoryId: string) => {
+    try {
+      onCategoryChange(categoryId);
+    } catch (error) {
+      console.error('Error changing category:', error);
+    }
+  };
+
   return (
     <div className="flex flex-wrap justify-center gap-4 mb-8">
       {categories.map((category) => (
         <Button
           key={category.id}
-          onClick={() => onCategoryChange(category.id)}
+          onClick={() => handleCategoryClick(category.id)}
           variant={selectedCategory === category.id ? "default" : "outline"}
           className={`px-6 py-3 font-medium transition-all ${
             selectedCategory === category.id

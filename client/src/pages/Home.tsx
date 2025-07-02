@@ -20,6 +20,19 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
 
+  const handleCategoryChange = (category: string) => {
+    try {
+      setSelectedCategory(category);
+    } catch (error) {
+      console.error('Error setting category:', error);
+      toast({
+        title: "خطأ",
+        description: "حدث خطأ أثناء تغيير الفئة",
+        variant: "destructive",
+      });
+    }
+  };
+
   // Redirect to home if not authenticated
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -358,7 +371,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-center mb-8">فئات المشاريع</h2>
               <CategoryFilter 
                 selectedCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
+                onCategoryChange={handleCategoryChange}
               />
             </div>
           </section>
