@@ -183,38 +183,43 @@ export default function ProjectCard({ project, onViewDetails, onEdit, onDelete }
           </div>
         </div>
         
-        <div className="flex space-x-2 space-x-reverse">
+        <div className="flex gap-2">
           <Button
             onClick={onViewDetails}
-            className="flex-1 bg-discord-blurple hover:bg-blue-600 transition-colors"
+            className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
           >
+            <i className="fas fa-eye ml-2"></i>
             عرض التفاصيل
           </Button>
           
           {/* Admin buttons */}
-          {isAdmin && onEdit && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleEdit}
-              className="bg-blue-600 hover:bg-blue-700 border-blue-600 text-white hover:text-white transition-all"
-              title="تحديث المشروع"
-            >
-              <i className="fas fa-edit"></i>
-            </Button>
-          )}
-          
-          {isAdmin && onDelete && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleDelete}
-              disabled={deleteMutation.isPending}
-              className="bg-red-600 hover:bg-red-700 border-red-600 text-white hover:text-white transition-all"
-              title="حذف المشروع"
-            >
-              <i className={`fas fa-trash ${deleteMutation.isPending ? 'animate-pulse' : ''}`}></i>
-            </Button>
+          {isAdmin && (
+            <div className="flex gap-1">
+              {onEdit && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleEdit}
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 border-0 text-white shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110"
+                  title="تحديث المشروع"
+                >
+                  <i className="fas fa-edit"></i>
+                </Button>
+              )}
+              
+              {onDelete && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDelete}
+                  disabled={deleteMutation.isPending}
+                  className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 border-0 text-white shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110 disabled:opacity-50 disabled:transform-none"
+                  title="حذف المشروع"
+                >
+                  <i className={`fas fa-trash ${deleteMutation.isPending ? 'animate-spin' : ''}`}></i>
+                </Button>
+              )}
+            </div>
           )}
           
           {project.githubUrl && (
@@ -225,7 +230,8 @@ export default function ProjectCard({ project, onViewDetails, onEdit, onDelete }
                 e.stopPropagation();
                 window.open(project.githubUrl!, '_blank');
               }}
-              className="bg-discord-dark hover:bg-discord-darker border-discord-dark"
+              className="bg-gray-700 hover:bg-gray-600 border-gray-600 text-gray-300 hover:text-white shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-110"
+              title="عرض الكود المصدري"
             >
               <i className="fab fa-github"></i>
             </Button>
