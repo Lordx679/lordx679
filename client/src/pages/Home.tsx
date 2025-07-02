@@ -366,6 +366,7 @@ export default function Home() {
                   { id: 'servers', label: 'الخوادم', icon: 'fas fa-server' },
                   { id: 'tools', label: 'الأدوات', icon: 'fas fa-tools' },
                   { id: 'templates', label: 'القوالب', icon: 'fas fa-code' },
+                  { id: 'designers', label: 'المصممين', icon: 'fas fa-paint-brush' },
                 ].map((category) => {
                   const isSelected = selectedCategory === category.id;
                   return (

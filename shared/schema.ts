@@ -43,7 +43,7 @@ export const projects = pgTable("projects", {
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description").notNull(),
   fullDescription: text("full_description"),
-  category: varchar("category", { length: 50 }).notNull(), // bots, servers, tools, templates
+  category: varchar("category", { length: 50 }).notNull(), // bots, servers, tools, templates, designers
   githubUrl: varchar("github_url", { length: 500 }),
   imageUrl: varchar("image_url", { length: 500 }),
   projectFileUrl: varchar("project_file_url", { length: 500 }),

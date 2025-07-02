@@ -19,6 +19,7 @@ const categoryStyles = {
   servers: { bg: 'bg-discord-green/20', text: 'text-discord-green', label: 'خادم' },
   tools: { bg: 'bg-discord-yellow/20', text: 'text-discord-yellow', label: 'أداة' },
   templates: { bg: 'bg-purple-500/20', text: 'text-purple-400', label: 'قالب' },
+  designers: { bg: 'bg-pink-500/20', text: 'text-pink-400', label: 'مصمم' },
 };
 
 export default function ProjectCard({ project, onViewDetails, onEdit, onDelete }: ProjectCardProps) {

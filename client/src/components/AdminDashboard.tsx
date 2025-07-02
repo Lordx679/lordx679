@@ -195,6 +195,7 @@ export default function AdminDashboard({ stats, onProjectAdded, editingProject }
                                 <option value="servers">🖥️ خادم</option>
                                 <option value="tools">🔧 أداة</option>
                                 <option value="templates">📋 قالب</option>
+                                <option value="designers">🎨 مصمم</option>
                               </select>
                             </FormControl>
                             <FormMessage />
