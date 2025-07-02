@@ -357,35 +357,19 @@ export default function Home() {
           <section id="categories" className="py-12 bg-discord-dark">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-3xl font-bold text-center mb-8">فئات المشاريع</h2>
-              {/* Simple category buttons without external component */}
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                {[
-                  { id: 'all', label: 'جميع المشاريع', icon: 'fas fa-th-large' },
-                  { id: 'bots', label: 'البوتات', icon: 'fas fa-robot' },
-                  { id: 'servers', label: 'الخوادم', icon: 'fas fa-server' },
-                  { id: 'tools', label: 'الأدوات', icon: 'fas fa-tools' },
-                  { id: 'templates', label: 'القوالب', icon: 'fas fa-code' },
-                ].map((category) => {
-                  const isSelected = selectedCategory === category.id;
-                  return (
-                    <span
-                      key={category.id}
-                      onClick={() => {
-                        if (category.id !== selectedCategory) {
-                          setSelectedCategory(category.id);
-                        }
-                      }}
-                      className={`cursor-pointer px-6 py-3 font-medium transition-all rounded-lg border ${
-                        isSelected
-                          ? 'bg-discord-blurple text-white border-discord-blurple hover:bg-blue-600'
-                          : 'bg-discord-elevated text-discord-text hover:bg-discord-dark hover:text-white border-discord-dark'
-                      }`}
-                    >
-                      <i className={`${category.icon} ml-2`}></i>
-                      {category.label}
-                    </span>
-                  );
-                })}
+              {/* Category dropdown to avoid runtime errors */}
+              <div className="flex justify-center mb-8">
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="px-6 py-3 bg-discord-elevated text-discord-text border border-discord-dark rounded-lg font-medium text-lg min-w-[200px] focus:outline-none focus:ring-2 focus:ring-discord-blurple"
+                >
+                  <option value="all">🔸 جميع المشاريع</option>
+                  <option value="bots">🤖 البوتات</option>
+                  <option value="servers">🖥️ الخوادم</option>
+                  <option value="tools">🔧 الأدوات</option>
+                  <option value="templates">📋 القوالب</option>
+                </select>
               </div>
             </div>
           </section>
