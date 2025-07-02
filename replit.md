@@ -105,6 +105,8 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 02, 2025. Switched authentication system from Replit OAuth to GitHub OAuth only
 - July 02, 2025. Set user lordx679 (ID: 190771533) as site admin with full permissions
 - July 02, 2025. Redesigned to elegant dark theme with minimalist geometric elements inspired by modern SEO tools design
+- July 02, 2025. Implemented real file upload system with multer for project files and images
+- July 02, 2025. Fixed runtime error overlay issue by replacing category buttons with dropdown selector
 
 ## User Preferences
 
