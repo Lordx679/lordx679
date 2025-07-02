@@ -38,7 +38,7 @@ export async function setupAuth(app: Express) {
     passport.use(new GitHubStrategy({
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "/api/auth/github/callback",
+      callbackURL: `https://${process.env.REPLIT_DEV_DOMAIN || 'localhost:5000'}/api/auth/github/callback`,
       scope: ['user:email']
     },
     async (accessToken: string, refreshToken: string, profile: any, done: any) => {
