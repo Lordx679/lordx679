@@ -24,12 +24,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/projects', async (req, res) => {
     try {
       const { category, search, limit = '50', offset = '0' } = req.query;
+      console.log('GET /api/projects - Query params:', { category, search, limit, offset });
+      
       const projects = await storage.getProjects(
         category as string,
         search as string,
         parseInt(limit as string),
         parseInt(offset as string)
       );
+      
+      console.log(`Found ${projects.length} projects for category: ${category}`);
       res.json(projects);
     } catch (error) {
       console.error("Error fetching projects:", error);
