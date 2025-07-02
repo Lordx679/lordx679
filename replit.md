@@ -101,6 +101,7 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 02, 2025. Updated authentication to use real user profile images instead of placeholder images
 - July 02, 2025. Removed "GitHub" references from login buttons, using generic "تسجيل الدخول" instead
 - July 02, 2025. Removed duplicate login button from landing page hero section
+- July 02, 2025. Changed entire color scheme from Discord theme to modern purple/violet color palette
 
 ## User Preferences
 
@@ -108,3 +109,4 @@ Preferred communication style: Simple, everyday language.
 User preference: Display real user profile pictures from their accounts instead of using placeholder images.
 User preference: Remove specific "GitHub" text from login buttons.
 User preference: Single login button instead of multiple buttons on landing page.
+User preference: Modern purple/violet color scheme instead of Discord blue theme.
