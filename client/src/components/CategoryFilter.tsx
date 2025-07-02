@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import React, { memo, useCallback } from "react";
 
 interface CategoryFilterProps {
   selectedCategory: string;
@@ -13,36 +13,70 @@ const categories = [
   { id: 'templates', label: 'القوالب', icon: 'fas fa-code' },
 ];
 
-export default function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryFilterProps) {
-  const handleCategoryClick = (categoryId: string) => {
+const CategoryButton = memo(({ 
+  category, 
+  isSelected, 
+  onClick 
+}: { 
+  category: typeof categories[0];
+  isSelected: boolean;
+  onClick: () => void;
+}) => {
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Minimal delay to avoid runtime conflicts
+    setTimeout(() => {
+      onClick();
+    }, 0);
+  }, [onClick]);
+
+  return (
+    <button
+      type="button"
+      onClick={handleClick}
+      className={`px-6 py-3 font-medium transition-all rounded-lg border ${
+        isSelected
+          ? 'bg-discord-blurple text-white border-discord-blurple hover:bg-blue-600'
+          : 'bg-discord-elevated text-discord-text hover:bg-discord-dark hover:text-white border-discord-dark'
+      }`}
+    >
+      <i className={`${category.icon} ml-2`}></i>
+      {category.label}
+    </button>
+  );
+});
+
+CategoryButton.displayName = 'CategoryButton';
+
+const CategoryFilter = memo(({ selectedCategory, onCategoryChange }: CategoryFilterProps) => {
+  const handleCategoryClick = useCallback((categoryId: string) => {
+    if (categoryId === selectedCategory) {
+      return;
+    }
+    
     try {
-      // Prevent double clicks
-      if (categoryId === selectedCategory) {
-        return;
-      }
       onCategoryChange(categoryId);
     } catch (error) {
-      console.error('Error changing category:', error);
+      console.error('Category change error:', error);
     }
-  };
+  }, [selectedCategory, onCategoryChange]);
 
   return (
     <div className="flex flex-wrap justify-center gap-4 mb-8">
       {categories.map((category) => (
-        <Button
+        <CategoryButton
           key={category.id}
+          category={category}
+          isSelected={selectedCategory === category.id}
           onClick={() => handleCategoryClick(category.id)}
-          variant={selectedCategory === category.id ? "default" : "outline"}
-          className={`px-6 py-3 font-medium transition-all ${
-            selectedCategory === category.id
-              ? 'bg-discord-blurple text-white hover:bg-blue-600'
-              : 'bg-discord-elevated text-discord-text hover:bg-discord-dark hover:text-white border-discord-dark'
-          }`}
-        >
-          <i className={`${category.icon} ml-2`}></i>
-          {category.label}
-        </Button>
+        />
       ))}
     </div>
   );
-}
+});
+
+CategoryFilter.displayName = 'CategoryFilter';
+
+export default CategoryFilter;
