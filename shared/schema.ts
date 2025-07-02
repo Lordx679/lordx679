@@ -46,6 +46,8 @@ export const projects = pgTable("projects", {
   category: varchar("category", { length: 50 }).notNull(), // bots, servers, tools, templates
   githubUrl: varchar("github_url", { length: 500 }),
   imageUrl: varchar("image_url", { length: 500 }),
+  projectFileUrl: varchar("project_file_url", { length: 500 }),
+  additionalImageUrl: varchar("additional_image_url", { length: 500 }),
   features: text("features").array(),
   installationSteps: text("installation_steps"),
   authorId: varchar("author_id").notNull().references(() => users.id),

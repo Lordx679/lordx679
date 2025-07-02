@@ -158,23 +158,47 @@ export default function ProjectModal({ projectId, onClose }: ProjectModalProps) 
           <Separator className="my-6 bg-discord-dark" />
           
           {/* Action Buttons */}
-          <div className="flex space-x-4 space-x-reverse">
-            {project.githubUrl && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex space-x-2 space-x-reverse">
+              {project.githubUrl && (
+                <Button
+                  onClick={() => window.open(project.githubUrl!, '_blank')}
+                  className="bg-discord-blurple hover:bg-blue-600 transition-colors flex-1"
+                >
+                  <i className="fab fa-github ml-2"></i>
+                  عرض الكود المصدري
+                </Button>
+              )}
+              {project.projectFileUrl && (
+                <Button
+                  onClick={() => window.open(project.projectFileUrl!, '_blank')}
+                  className="bg-discord-green hover:bg-green-600 transition-colors flex-1"
+                >
+                  <i className="fas fa-download ml-2"></i>
+                  تحميل المشروع
+                </Button>
+              )}
+            </div>
+            
+            <div className="flex space-x-2 space-x-reverse">
+              {project.additionalImageUrl && (
+                <Button
+                  onClick={() => window.open(project.additionalImageUrl!, '_blank')}
+                  variant="outline"
+                  className="bg-discord-dark hover:bg-discord-darker border-discord-dark flex-1"
+                >
+                  <i className="fas fa-image ml-2"></i>
+                  صورة إضافية
+                </Button>
+              )}
               <Button
-                onClick={() => window.open(project.githubUrl!, '_blank')}
-                className="bg-discord-blurple hover:bg-blue-600 transition-colors"
+                variant="outline"
+                className="bg-discord-dark hover:bg-discord-darker border-discord-dark flex-1"
               >
-                <i className="fab fa-github ml-2"></i>
-                عرض الكود المصدري
+                <i className="fas fa-star ml-2"></i>
+                إضافة للمفضلة
               </Button>
-            )}
-            <Button
-              variant="outline"
-              className="bg-discord-dark hover:bg-discord-darker border-discord-dark"
-            >
-              <i className="fas fa-star ml-2"></i>
-              إضافة للمفضلة
-            </Button>
+            </div>
           </div>
         </div>
       </DialogContent>

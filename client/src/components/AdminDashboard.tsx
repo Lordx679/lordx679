@@ -262,6 +262,77 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
                       />
                     </div>
                     
+                    {/* File Upload Section */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={form.control}
+                        name="projectFileUrl"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>ملف المشروع المضغوط</FormLabel>
+                            <FormControl>
+                              <div className="space-y-2">
+                                <Input
+                                  type="file"
+                                  accept=".zip,.rar,.7z,.tar.gz"
+                                  className="bg-discord-dark text-white border-discord-dark file:bg-discord-blurple file:text-white file:border-0 file:rounded file:px-3 file:py-1"
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                      // In a real app, upload to cloud storage
+                                      const fakeUrl = `https://storage.example.com/projects/${file.name}`;
+                                      field.onChange(fakeUrl);
+                                    }
+                                  }}
+                                />
+                                <Input
+                                  placeholder="أو أدخل رابط الملف المضغوط"
+                                  className="bg-discord-dark text-white placeholder-discord-text border-discord-dark"
+                                  value={field.value || ""}
+                                  onChange={field.onChange}
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="additionalImageUrl"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>صورة إضافية</FormLabel>
+                            <FormControl>
+                              <div className="space-y-2">
+                                <Input
+                                  type="file"
+                                  accept=".jpg,.jpeg,.png,.gif,.webp"
+                                  className="bg-discord-dark text-white border-discord-dark file:bg-discord-blurple file:text-white file:border-0 file:rounded file:px-3 file:py-1"
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                      // In a real app, upload to cloud storage
+                                      const fakeUrl = `https://storage.example.com/images/${file.name}`;
+                                      field.onChange(fakeUrl);
+                                    }
+                                  }}
+                                />
+                                <Input
+                                  placeholder="أو أدخل رابط الصورة الإضافية"
+                                  className="bg-discord-dark text-white placeholder-discord-text border-discord-dark"
+                                  value={field.value || ""}
+                                  onChange={field.onChange}
+                                />
+                              </div>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
                     {/* Features Section */}
                     <div>
                       <FormLabel>المميزات</FormLabel>
