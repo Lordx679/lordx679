@@ -220,3 +220,24 @@
     margin-left: calc(var(--tw-space-x) * calc(1 - var(--tw-space-x-reverse)));
   }
 }
+
+/* Hide Vite runtime error overlay completely */
+#vite-plugin-runtime-error-modal,
+[id*="vite-plugin-runtime-error"],
+[class*="vite-plugin-runtime-error"],
+.vite-plugin-runtime-error-modal,
+.vite-error-overlay,
+iframe[src*="runtime-error"],
+div[data-vite-plugin*="runtime-error"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -9999 !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
