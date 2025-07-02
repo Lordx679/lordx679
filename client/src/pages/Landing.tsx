@@ -238,11 +238,18 @@ export default function Landing() {
                 <Card className="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/20 hover:border-white/40 transition-all duration-300 shadow-xl hover:shadow-2xl h-full">
                   <CardContent className="p-8 text-center h-full flex flex-col">
                     <motion.div 
-                      className={`w-20 h-20 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg group-hover:shadow-xl transition-shadow duration-300`}
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.6 }}
+                      className="relative w-24 h-24 mx-auto mb-6"
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.3 }}
                     >
-                      <i className={`${feature.icon} text-white text-3xl`}></i>
+                      <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} rounded-2xl opacity-20 blur-lg`}></div>
+                      <div className={`relative w-full h-full bg-discord-elevated border border-discord-border rounded-2xl flex items-center justify-center shadow-xl`}>
+                        <motion.i 
+                          className={`${feature.icon} text-discord-blurple text-4xl`}
+                          whileHover={{ rotate: 15 }}
+                          transition={{ duration: 0.2 }}
+                        ></motion.i>
+                      </div>
                     </motion.div>
                     <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors">
                       {feature.title}
@@ -313,11 +320,18 @@ export default function Landing() {
                   whileHover={{ boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)" }}
                 >
                   <motion.div 
-                    className={`w-16 h-16 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
-                    whileHover={{ rotate: 15, scale: 1.1 }}
+                    className="relative w-20 h-20 mx-auto mb-4"
+                    whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <i className={`${stat.icon} text-white text-2xl`}></i>
+                    <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} rounded-xl opacity-15 blur-sm`}></div>
+                    <div className="relative w-full h-full bg-discord-elevated border border-discord-border rounded-xl flex items-center justify-center shadow-lg">
+                      <motion.i 
+                        className={`${stat.icon} text-discord-blurple text-3xl`}
+                        whileHover={{ rotate: 10 }}
+                        transition={{ duration: 0.2 }}
+                      ></motion.i>
+                    </div>
                   </motion.div>
                   <motion.h3 
                     className={`text-4xl md:text-5xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}
