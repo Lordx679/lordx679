@@ -30,6 +30,14 @@ function App() {
   useEffect(() => {
     // Global error handler for runtime errors
     const handleError = (event: ErrorEvent) => {
+      // Hide Vite error overlay specifically
+      const overlay = document.querySelector('#vite-error-overlay') || 
+                     document.querySelector('.vite-error-overlay') ||
+                     document.querySelector('[data-vite-error-overlay]');
+      if (overlay) {
+        (overlay as HTMLElement).style.display = 'none';
+      }
+      
       console.warn('Runtime error suppressed:', event.error);
       event.preventDefault();
       return true;
@@ -40,10 +48,29 @@ function App() {
       event.preventDefault();
     };
 
+    // Additional DOM observer for dynamically added overlays
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const element = node as Element;
+            if (element.id === 'vite-error-overlay' || 
+                element.classList?.contains('vite-error-overlay') ||
+                element.hasAttribute('data-vite-error-overlay')) {
+              (element as HTMLElement).style.display = 'none';
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
     window.addEventListener('error', handleError);
     window.addEventListener('unhandledrejection', handleUnhandledRejection);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('error', handleError);
       window.removeEventListener('unhandledrejection', handleUnhandledRejection);
     };

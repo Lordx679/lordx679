@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide Vite runtime error overlay */
+#vite-error-overlay {
+  display: none !important;
+}
+
+.vite-error-overlay {
+  display: none !important;
+}
+
+/* Additional runtime error overlay styles to hide */
+[data-vite-error-overlay] {
+  display: none !important;
+}
+
 :root {
   --background: hsl(0, 0%, 3%);
   --foreground: hsl(0, 0%, 90%);
