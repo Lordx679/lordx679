@@ -217,6 +217,7 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
                               rows={4}
                               className="bg-discord-dark text-white placeholder-discord-text border-discord-dark resize-none"
                               {...field}
+                              value={field.value || ""}
                             />
                           </FormControl>
                           <FormMessage />
@@ -236,6 +237,7 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
                                 placeholder="https://github.com/user/repo"
                                 className="bg-discord-dark text-white placeholder-discord-text border-discord-dark"
                                 {...field}
+                                value={field.value || ""}
                               />
                             </FormControl>
                             <FormMessage />
@@ -254,6 +256,7 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
                                 placeholder="https://example.com/image.jpg"
                                 className="bg-discord-dark text-white placeholder-discord-text border-discord-dark"
                                 {...field}
+                                value={field.value || ""}
                               />
                             </FormControl>
                             <FormMessage />
@@ -388,6 +391,7 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
                               rows={4}
                               className="bg-discord-dark text-white placeholder-discord-text border-discord-dark resize-none font-mono text-sm"
                               {...field}
+                              value={field.value || ""}
                             />
                           </FormControl>
                           <FormMessage />

@@ -47,19 +47,13 @@ export default function Home() {
       }
       
       const url = `/api/projects${params.toString() ? '?' + params.toString() : ''}`;
-      console.log('Fetching projects from:', url);
-      console.log('Selected category:', selectedCategory);
-      
       const res = await fetch(url, { credentials: 'include' });
       
       if (!res.ok) {
-        console.error('API Error:', res.status, res.statusText);
         throw new Error(`${res.status}: ${res.statusText}`);
       }
       
-      const data = await res.json();
-      console.log('Received projects:', data);
-      return data;
+      return await res.json();
     },
     enabled: isAuthenticated,
     retry: false,
