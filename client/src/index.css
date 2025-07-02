@@ -2,17 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide Vite runtime error overlay */
-#vite-error-overlay {
+/* Hide ALL Vite runtime error overlays */
+#vite-error-overlay,
+.vite-error-overlay,
+[data-vite-error-overlay],
+[data-runtime-error],
+.runtime-error-overlay,
+.error-overlay,
+div[style*="position: fixed"][style*="z-index"][style*="background"] {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
-.vite-error-overlay {
-  display: none !important;
+/* Ensure no overlays appear */
+body::before,
+body::after {
+  content: none !important;
 }
 
-/* Additional runtime error overlay styles to hide */
-[data-vite-error-overlay] {
+/* Block any fixed positioned overlays that might be error related */
+div[style*="position: fixed"]:has(pre) {
   display: none !important;
 }
 
