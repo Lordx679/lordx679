@@ -50,36 +50,35 @@ export default function Home() {
   if (isLoading) {
     return (
       <motion.div 
-        className="min-h-screen bg-gradient-to-br from-discord-darkest via-discord-dark to-discord-elevated flex items-center justify-center overflow-hidden"
+        className="min-h-screen bg-discord-darkest flex items-center justify-center overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        {/* Animated Background */}
-        <div className="absolute inset-0">
+        {/* Minimalist Geometric Background */}
+        <div className="absolute inset-0 overflow-hidden">
           <motion.div 
-            className="absolute top-1/4 left-1/4 w-64 h-64 bg-discord-blurple/20 rounded-full blur-3xl"
+            className="absolute top-20 left-20 w-16 h-16 border border-discord-accent/20 rounded-sm rotate-45"
             animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.3, 0.6, 0.3],
+              rotate: [45, 60, 45],
+              scale: [1, 1.1, 1],
             }}
             transition={{
-              duration: 3,
+              duration: 5,
               repeat: Infinity,
               ease: "easeInOut"
             }}
           />
           <motion.div 
-            className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl"
+            className="absolute bottom-32 right-32 w-8 h-8 bg-discord-accent/10 rounded-full"
             animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.4, 0.7, 0.4],
+              scale: [1, 1.3, 1],
+              opacity: [0.2, 0.4, 0.2],
             }}
             transition={{
-              duration: 4,
+              duration: 3,
               repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
+              ease: "easeInOut"
             }}
           />
         </div>
@@ -104,16 +103,7 @@ export default function Home() {
           </motion.div>
           
           <motion.h2 
-            className="text-2xl font-bold bg-gradient-to-r from-discord-blurple via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4"
-            animate={{ 
-              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-            }}
-            transition={{ 
-              duration: 2,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            style={{ backgroundSize: "200% 200%" }}
+            className="text-2xl font-bold text-discord-blurple mb-4"
           >
             جاري التحميل...
           </motion.h2>

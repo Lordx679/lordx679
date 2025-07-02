@@ -27,14 +27,27 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-discord-darkest via-discord-dark to-discord-elevated text-white overflow-hidden" dir="rtl">
+    <div className="min-h-screen bg-discord-darkest text-white overflow-hidden" dir="rtl">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
+        {/* Geometric floating elements */}
         <motion.div 
-          className="absolute -top-40 -right-40 w-80 h-80 bg-discord-blurple/10 rounded-full blur-3xl"
+          className="absolute top-20 right-20 w-32 h-32 border border-discord-accent/30 rounded-lg rotate-12"
           animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.6, 0.3],
+            rotate: [12, 25, 12],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        ></motion.div>
+        <motion.div 
+          className="absolute top-1/3 left-16 w-24 h-24 bg-discord-accent/20 rounded-full"
+          animate={{
+            scale: [1, 1.1, 1],
+            opacity: [0.2, 0.4, 0.2],
           }}
           transition={{
             duration: 4,
@@ -43,29 +56,27 @@ export default function Landing() {
           }}
         ></motion.div>
         <motion.div 
-          className="absolute top-1/2 -left-40 w-60 h-60 bg-discord-green/10 rounded-full blur-3xl"
+          className="absolute bottom-40 right-40 w-16 h-16 border-2 border-discord-blurple/40 rounded-sm rotate-45"
           animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.7, 0.4],
+            rotate: [45, 90, 45],
+            scale: [1, 1.2, 1],
           }}
           transition={{
-            duration: 5,
+            duration: 8,
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1
+            ease: "easeInOut"
           }}
         ></motion.div>
         <motion.div 
-          className="absolute -bottom-40 right-1/3 w-96 h-96 bg-discord-yellow/10 rounded-full blur-3xl"
+          className="absolute top-1/2 right-1/2 w-8 h-8 bg-white/10 rounded-full"
           animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.5, 0.2],
+            x: [0, 30, 0],
+            y: [0, -30, 0],
           }}
           transition={{
-            duration: 6,
+            duration: 10,
             repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2
+            ease: "easeInOut"
           }}
         ></motion.div>
       </div>
@@ -75,7 +86,7 @@ export default function Landing() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-10 bg-black/20 backdrop-blur-sm border-b border-white/10 sticky top-0"
+        className="relative z-10 bg-discord-elevated/50 backdrop-blur-xl border-b border-discord-border sticky top-0"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -122,18 +133,7 @@ export default function Landing() {
           >
             اكتشف أفضل
             <motion.span 
-              className="block bg-gradient-to-r from-discord-blurple via-purple-500 to-pink-500 bg-clip-text text-transparent mt-2"
-              animate={{ 
-                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-              }}
-              transition={{ 
-                duration: 3,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-              style={{
-                backgroundSize: "200% 200%"
-              }}
+              className="block text-discord-blurple mt-2"
             >
               مشاريع التطوير
             </motion.span>
@@ -154,7 +154,7 @@ export default function Landing() {
               <Button
                 onClick={() => window.location.href = "/api/login"}
                 size="lg"
-                className="bg-gradient-to-r from-discord-blurple to-purple-600 hover:from-purple-600 hover:to-discord-blurple text-white px-12 py-6 text-xl font-bold shadow-2xl border-0 rounded-2xl"
+                className="bg-discord-elevated hover:bg-discord-accent text-white px-12 py-6 text-xl font-bold shadow-xl border border-discord-border rounded-2xl"
               >
                 <motion.i 
                   className="fas fa-rocket ml-3 text-xl"
@@ -196,21 +196,21 @@ export default function Landing() {
                 icon: "fas fa-robot",
                 title: "مشاريع متطورة",
                 description: "اكتشف مجموعة واسعة من المشاريع المطورة بأحدث التقنيات",
-                color: "from-discord-blurple to-purple-600",
+                color: "from-discord-pink via-discord-purple to-discord-blurple",
                 delay: 0
               },
               {
                 icon: "fas fa-palette",
                 title: "تصاميم مبتكرة",
                 description: "استلهم من أفضل التصاميم والواجهات العصرية",
-                color: "from-discord-green to-emerald-500",
+                color: "from-discord-cyan via-discord-green to-discord-yellow",
                 delay: 0.2
               },
               {
                 icon: "fas fa-tools",
                 title: "أدوات مفيدة",
                 description: "استخدم أدوات وقوالب جاهزة لتطوير مشاريعك",
-                color: "from-discord-yellow to-orange-500",
+                color: "from-discord-orange via-discord-red to-discord-pink",
                 delay: 0.4
               }
             ].map((feature, index) => (
@@ -262,10 +262,10 @@ export default function Landing() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { number: "500+", label: "مشروع مميز", color: "from-discord-blurple to-purple-500" },
-              { number: "50+", label: "مطور نشط", color: "from-discord-green to-emerald-500" },
-              { number: "10K+", label: "زائر شهري", color: "from-discord-yellow to-orange-500" },
-              { number: "24/7", label: "دعم فني", color: "from-pink-500 to-rose-500" }
+              { number: "500+", label: "مشروع مميز", color: "from-discord-pink via-discord-purple to-discord-cyan" },
+              { number: "50+", label: "مطور نشط", color: "from-discord-green via-discord-yellow to-discord-orange" },
+              { number: "10K+", label: "زائر شهري", color: "from-discord-cyan via-discord-blurple to-discord-pink" },
+              { number: "24/7", label: "دعم فني", color: "from-discord-red via-discord-orange to-discord-yellow" }
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -332,16 +332,16 @@ export default function Landing() {
             viewport={{ once: true }}
           >
             <motion.span
-              className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-discord-cyan via-discord-purple via-discord-pink to-discord-yellow bg-clip-text text-transparent"
               animate={{ 
                 backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
               }}
               transition={{ 
-                duration: 4,
+                duration: 5,
                 repeat: Infinity,
                 ease: "linear"
               }}
-              style={{ backgroundSize: "200% 200%" }}
+              style={{ backgroundSize: "400% 400%" }}
             >
               ابدأ رحلتك اليوم
             </motion.span>
@@ -372,7 +372,7 @@ export default function Landing() {
               <Button
                 onClick={() => window.location.href = "/api/login"}
                 size="lg"
-                className="bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 hover:from-red-600 hover:via-pink-600 hover:to-purple-600 text-white px-16 py-8 text-2xl font-black shadow-2xl border-0 rounded-3xl relative overflow-hidden group"
+                className="bg-discord-elevated hover:bg-discord-accent text-white px-16 py-8 text-2xl font-black shadow-2xl border border-discord-border rounded-3xl relative overflow-hidden group"
               >
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"

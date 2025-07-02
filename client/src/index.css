@@ -3,59 +3,65 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(240, 20%, 15%);
-  --muted: hsl(260, 5%, 92%);
-  --muted-foreground: hsl(240, 8%, 45%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(240, 20%, 15%);
+  --background: hsl(210, 40%, 98%);
+  --foreground: hsl(230, 30%, 15%);
+  --muted: hsl(210, 15%, 92%);
+  --muted-foreground: hsl(220, 12%, 45%);
+  --popover: hsl(210, 40%, 98%);
+  --popover-foreground: hsl(230, 30%, 15%);
   --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(240, 20%, 15%);
-  --border: hsl(260, 10%, 88%);
-  --input: hsl(260, 10%, 88%);
-  --primary: hsl(260, 85%, 65%);
-  --primary-foreground: hsl(0, 0%, 98%);
-  --secondary: hsl(260, 5%, 92%);
-  --secondary-foreground: hsl(240, 15%, 20%);
-  --accent: hsl(260, 5%, 92%);
-  --accent-foreground: hsl(240, 15%, 20%);
-  --destructive: hsl(350, 85%, 60%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(260, 85%, 65%);
+  --card-foreground: hsl(230, 30%, 15%);
+  --border: hsl(210, 20%, 85%);
+  --input: hsl(210, 20%, 85%);
+  --primary: hsl(280, 85%, 60%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(210, 15%, 92%);
+  --secondary-foreground: hsl(220, 25%, 25%);
+  --accent: hsl(210, 15%, 92%);
+  --accent-foreground: hsl(220, 25%, 25%);
+  --destructive: hsl(345, 90%, 65%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(280, 85%, 60%);
   --radius: 0.5rem;
 
-  /* Modern Color Scheme */
-  --discord-blurple: hsl(260, 85%, 65%);
-  --discord-dark: hsl(240, 15%, 25%);
-  --discord-darker: hsl(245, 18%, 22%);
-  --discord-darkest: hsl(250, 20%, 15%);
-  --discord-elevated: hsl(240, 12%, 20%);
-  --discord-text: hsl(240, 10%, 50%);
-  --discord-green: hsl(150, 70%, 45%);
-  --discord-yellow: hsl(45, 95%, 55%);
-  --discord-red: hsl(350, 85%, 60%);
+  /* Dark Modern Color Scheme */
+  --discord-blurple: hsl(0, 0%, 90%);
+  --discord-dark: hsl(0, 0%, 8%);
+  --discord-darker: hsl(0, 0%, 5%);
+  --discord-darkest: hsl(0, 0%, 3%);
+  --discord-elevated: hsl(0, 0%, 12%);
+  --discord-text: hsl(0, 0%, 65%);
+  --discord-green: hsl(120, 40%, 60%);
+  --discord-yellow: hsl(50, 80%, 70%);
+  --discord-red: hsl(0, 70%, 65%);
+  --discord-orange: hsl(25, 80%, 65%);
+  --discord-pink: hsl(320, 60%, 70%);
+  --discord-cyan: hsl(180, 60%, 70%);
+  --discord-purple: hsl(270, 60%, 70%);
+  --discord-accent: hsl(0, 0%, 20%);
+  --discord-border: hsl(0, 0%, 15%);
 }
 
 .dark {
-  --background: hsl(250, 20%, 15%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 12%, 20%);
-  --muted-foreground: hsl(240, 10%, 50%);
-  --popover: hsl(250, 20%, 15%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 12%, 20%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 15%, 25%);
-  --input: hsl(240, 15%, 25%);
-  --primary: hsl(260, 85%, 65%);
+  --background: hsl(230, 35%, 12%);
+  --foreground: hsl(210, 20%, 95%);
+  --muted: hsl(215, 20%, 22%);
+  --muted-foreground: hsl(210, 15%, 55%);
+  --popover: hsl(230, 35%, 12%);
+  --popover-foreground: hsl(210, 20%, 95%);
+  --card: hsl(215, 20%, 22%);
+  --card-foreground: hsl(210, 20%, 95%);
+  --border: hsl(220, 25%, 18%);
+  --input: hsl(220, 25%, 18%);
+  --primary: hsl(280, 85%, 60%);
   --primary-foreground: hsl(210, 40%, 98%);
-  --secondary: hsl(240, 12%, 20%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(240, 12%, 20%);
-  --accent-foreground: hsl(0, 0%, 98%);
-  --destructive: hsl(350, 85%, 40%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(260, 50%, 80%);
+  --secondary: hsl(215, 20%, 22%);
+  --secondary-foreground: hsl(210, 20%, 95%);
+  --accent: hsl(215, 20%, 22%);
+  --accent-foreground: hsl(210, 20%, 95%);
+  --destructive: hsl(345, 90%, 50%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(280, 60%, 70%);
   --radius: 0.5rem;
 }
 
@@ -143,16 +149,16 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, var(--discord-blurple), hsl(280, 85%, 65%));
+    background: linear-gradient(180deg, var(--discord-pink), var(--discord-purple), var(--discord-cyan));
     border-radius: 6px;
     border: 2px solid var(--discord-darkest);
     transition: all 0.3s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, hsl(280, 85%, 65%), var(--discord-blurple));
+    background: linear-gradient(180deg, var(--discord-cyan), var(--discord-purple), var(--discord-pink));
     transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
   }
 
   /* Animated background patterns */
