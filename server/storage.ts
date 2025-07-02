@@ -170,7 +170,7 @@ export class DatabaseStorage implements IStorage {
     const result = await db
       .delete(projects)
       .where(eq(projects.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async incrementProjectViews(id: number): Promise<void> {
@@ -201,7 +201,7 @@ export class DatabaseStorage implements IStorage {
       .delete(projectLikes)
       .where(and(eq(projectLikes.projectId, projectId), eq(projectLikes.userId, userId)));
 
-    if (result.rowCount > 0) {
+    if ((result.rowCount ?? 0) > 0) {
       // Update project likes count
       await db
         .update(projects)

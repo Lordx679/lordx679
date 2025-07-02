@@ -81,7 +81,7 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
       ...data,
       features,
     };
-    console.log('Submitting project data:', submitData);
+
     createProjectMutation.mutate(submitData);
   };
 
