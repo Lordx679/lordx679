@@ -102,6 +102,7 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 02, 2025. Removed "GitHub" references from login buttons, using generic "تسجيل الدخول" instead
 - July 02, 2025. Removed duplicate login button from landing page hero section
 - July 02, 2025. Changed entire color scheme from Discord theme to modern purple/violet color palette
+- July 02, 2025. Switched authentication system from Replit OAuth to GitHub OAuth only
 
 ## User Preferences
 
@@ -110,3 +111,4 @@ User preference: Display real user profile pictures from their accounts instead 
 User preference: Remove specific "GitHub" text from login buttons.
 User preference: Single login button instead of multiple buttons on landing page.
 User preference: Modern purple/violet color scheme instead of Discord blue theme.
+User preference: Use GitHub OAuth exclusively for authentication instead of multiple providers.

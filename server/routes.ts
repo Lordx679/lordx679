@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, isAuthenticated } from "./githubAuth";
 import { insertProjectSchema } from "@shared/schema";
 import { z } from "zod";
 
@@ -12,8 +12,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
+      const user = req.user;
       res.json(user);
     } catch (error) {
       console.error("Error fetching user:", error);
@@ -60,7 +59,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin-only project creation
   app.post('/api/projects', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const isAdmin = await storage.isUserAdmin(userId);
       
       if (!isAdmin) {
@@ -86,7 +85,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin-only project update
   app.put('/api/projects/:id', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const isAdmin = await storage.isUserAdmin(userId);
       
       if (!isAdmin) {
@@ -115,7 +114,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin-only project deletion
   app.delete('/api/projects/:id', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const isAdmin = await storage.isUserAdmin(userId);
       
       if (!isAdmin) {
@@ -139,7 +138,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Project like/unlike
   app.post('/api/projects/:id/like', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const projectId = parseInt(req.params.id);
       
       const isLiked = await storage.isProjectLiked(projectId, userId);
@@ -160,7 +159,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Check if project is liked
   app.get('/api/projects/:id/liked', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const projectId = parseInt(req.params.id);
       
       const isLiked = await storage.isProjectLiked(projectId, userId);
@@ -174,7 +173,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin stats
   app.get('/api/admin/stats', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const isAdmin = await storage.isUserAdmin(userId);
       
       if (!isAdmin) {
