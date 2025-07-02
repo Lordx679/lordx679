@@ -38,21 +38,13 @@ export default function Landing() {
           <p className="text-xl text-discord-text mb-8 max-w-3xl mx-auto">
             منصة شاملة لعرض ومشاركة مشاريع ديسكورد المبتكرة - من البوتات إلى الخوادم والأدوات المتقدمة
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex justify-center">
             <Button
               onClick={() => window.location.href = "/api/login"}
               className="bg-discord-blurple hover:bg-blue-600 px-8 py-3 text-lg transition-all transform hover:scale-105"
             >
               <i className="fas fa-rocket ml-2"></i>
               استكشف المشاريع
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => window.location.href = "/api/login"}
-              className="border-2 border-discord-blurple text-discord-blurple hover:bg-discord-blurple hover:text-white px-8 py-3 text-lg transition-all"
-            >
-              <i className="fab fa-github ml-2"></i>
-              تسجيل الدخول
             </Button>
           </div>
         </div>
