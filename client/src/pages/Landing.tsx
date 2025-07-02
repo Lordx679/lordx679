@@ -1,8 +1,15 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Landing() {
+  // Fetch real statistics from API
+  const { data: stats } = useQuery<{totalProjects: number; totalUsers: number; totalViews: number}>({
+    queryKey: ["/api/stats"],
+    retry: false,
+  });
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -262,10 +269,26 @@ export default function Landing() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
-              { number: "500+", label: "مشروع مميز", color: "from-discord-pink via-discord-purple to-discord-cyan" },
-              { number: "50+", label: "مطور نشط", color: "from-discord-green via-discord-yellow to-discord-orange" },
-              { number: "10K+", label: "زائر شهري", color: "from-discord-cyan via-discord-blurple to-discord-pink" },
-              { number: "24/7", label: "دعم فني", color: "from-discord-red via-discord-orange to-discord-yellow" }
+              { 
+                number: stats?.totalProjects?.toLocaleString() || "0", 
+                label: "مشروع مميز", 
+                color: "from-discord-pink via-discord-purple to-discord-cyan" 
+              },
+              { 
+                number: stats?.totalUsers?.toLocaleString() || "0", 
+                label: "مطور نشط", 
+                color: "from-discord-green via-discord-yellow to-discord-orange" 
+              },
+              { 
+                number: stats?.totalViews?.toLocaleString() || "0", 
+                label: "مشاهدة إجمالية", 
+                color: "from-discord-cyan via-discord-blurple to-discord-pink" 
+              },
+              { 
+                number: "24/7", 
+                label: "دعم فني", 
+                color: "from-discord-red via-discord-orange to-discord-yellow" 
+              }
             ].map((stat, index) => (
               <motion.div
                 key={index}
