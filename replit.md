@@ -103,6 +103,7 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 02, 2025. Removed duplicate login button from landing page hero section
 - July 02, 2025. Changed entire color scheme from Discord theme to modern purple/violet color palette
 - July 02, 2025. Switched authentication system from Replit OAuth to GitHub OAuth only
+- July 02, 2025. Set user lordx679 (ID: 190771533) as site admin with full permissions
 
 ## User Preferences
 
