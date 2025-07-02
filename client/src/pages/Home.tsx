@@ -8,6 +8,7 @@ import CategoryFilter from "@/components/CategoryFilter";
 import SearchBar from "@/components/SearchBar";
 import AdminDashboard from "@/components/AdminDashboard";
 import ProjectModal from "@/components/ProjectModal";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Project, User } from "@shared/schema";
@@ -370,10 +371,12 @@ export default function Home() {
           <section id="categories" className="py-12 bg-discord-dark">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-3xl font-bold text-center mb-8">فئات المشاريع</h2>
-              <CategoryFilter 
-                selectedCategory={selectedCategory}
-                onCategoryChange={handleCategoryChange}
-              />
+              <ErrorBoundary>
+                <CategoryFilter 
+                  selectedCategory={selectedCategory}
+                  onCategoryChange={handleCategoryChange}
+                />
+              </ErrorBoundary>
             </div>
           </section>
 
