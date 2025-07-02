@@ -1,14 +1,12 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import ProjectCard from "@/components/ProjectCard";
-import CategoryFilter from "@/components/CategoryFilter";
 import SearchBar from "@/components/SearchBar";
 import AdminDashboard from "@/components/AdminDashboard";
 import ProjectModal from "@/components/ProjectModal";
-import ErrorBoundary from "@/components/ErrorBoundary";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Project, User } from "@shared/schema";
@@ -21,19 +19,7 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [showAdminDashboard, setShowAdminDashboard] = useState(false);
 
-  const handleCategoryChange = useCallback((category: string) => {
-    try {
-      if (category === selectedCategory) return;
-      setSelectedCategory(category);
-    } catch (error) {
-      console.error('Error setting category:', error);
-      toast({
-        title: "خطأ",
-        description: "حدث خطأ أثناء تغيير الفئة",
-        variant: "destructive",
-      });
-    }
-  }, [selectedCategory, toast]);
+
 
   // Redirect to home if not authenticated
   useEffect(() => {
