@@ -279,12 +279,28 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
                                   type="file"
                                   accept=".zip,.rar,.7z,.tar.gz"
                                   className="bg-discord-dark text-white border-discord-dark file:bg-discord-blurple file:text-white file:border-0 file:rounded file:px-3 file:py-1"
-                                  onChange={(e) => {
+                                  onChange={async (e) => {
                                     const file = e.target.files?.[0];
                                     if (file) {
-                                      // In a real app, upload to cloud storage
-                                      const fakeUrl = `https://storage.example.com/projects/${file.name}`;
-                                      field.onChange(fakeUrl);
+                                      try {
+                                        const formData = new FormData();
+                                        formData.append('file', file);
+                                        
+                                        const response = await fetch('/api/upload', {
+                                          method: 'POST',
+                                          body: formData,
+                                          credentials: 'include'
+                                        });
+                                        
+                                        if (response.ok) {
+                                          const result = await response.json();
+                                          field.onChange(result.url);
+                                        } else {
+                                          console.error('Upload failed');
+                                        }
+                                      } catch (error) {
+                                        console.error('Upload error:', error);
+                                      }
                                     }
                                   }}
                                 />
@@ -313,12 +329,28 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
                                   type="file"
                                   accept=".jpg,.jpeg,.png,.gif,.webp"
                                   className="bg-discord-dark text-white border-discord-dark file:bg-discord-blurple file:text-white file:border-0 file:rounded file:px-3 file:py-1"
-                                  onChange={(e) => {
+                                  onChange={async (e) => {
                                     const file = e.target.files?.[0];
                                     if (file) {
-                                      // In a real app, upload to cloud storage
-                                      const fakeUrl = `https://storage.example.com/images/${file.name}`;
-                                      field.onChange(fakeUrl);
+                                      try {
+                                        const formData = new FormData();
+                                        formData.append('file', file);
+                                        
+                                        const response = await fetch('/api/upload', {
+                                          method: 'POST',
+                                          body: formData,
+                                          credentials: 'include'
+                                        });
+                                        
+                                        if (response.ok) {
+                                          const result = await response.json();
+                                          field.onChange(result.url);
+                                        } else {
+                                          console.error('Upload failed');
+                                        }
+                                      } catch (error) {
+                                        console.error('Upload error:', error);
+                                      }
                                     }
                                   }}
                                 />
