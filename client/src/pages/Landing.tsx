@@ -52,7 +52,7 @@ export default function Landing() {
               className="border-2 border-discord-blurple text-discord-blurple hover:bg-discord-blurple hover:text-white px-8 py-3 text-lg transition-all"
             >
               <i className="fab fa-github ml-2"></i>
-              ربط GitHub
+              تسجيل الدخول
             </Button>
           </div>
         </div>
@@ -113,13 +113,13 @@ export default function Landing() {
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold mb-4">انضم إلى مجتمع المطورين</h2>
           <p className="text-xl text-discord-text mb-8">
-            سجل الدخول باستخدام GitHub واستكشف آلاف المشاريع المبتكرة
+            سجل الدخول واستكشف آلاف المشاريع المبتكرة
           </p>
           <Button
             onClick={() => window.location.href = "/api/login"}
             className="bg-discord-blurple hover:bg-blue-600 px-8 py-3 text-lg transition-all transform hover:scale-105"
           >
-            <i className="fab fa-github ml-2"></i>
+            <i className="fas fa-sign-in-alt ml-2"></i>
             ابدأ الآن مجاناً
           </Button>
         </div>
