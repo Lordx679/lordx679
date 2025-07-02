@@ -77,10 +77,12 @@ export default function AdminDashboard({ stats, onProjectAdded }: AdminDashboard
   const onSubmit = (data: InsertProject) => {
     // Process features as array
     const features = data.features?.filter(f => f.trim() !== '') || [];
-    createProjectMutation.mutate({
+    const submitData = {
       ...data,
       features,
-    });
+    };
+    console.log('Submitting project data:', submitData);
+    createProjectMutation.mutate(submitData);
   };
 
   const [featuresInput, setFeaturesInput] = useState("");

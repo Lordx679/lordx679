@@ -110,10 +110,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "Admin access required" });
       }
 
+      console.log('Received project data:', req.body);
       const validatedData = insertProjectSchema.parse({
         ...req.body,
         authorId: userId,
       });
+      console.log('Validated project data:', validatedData);
 
       const project = await storage.createProject(validatedData);
       res.status(201).json(project);
