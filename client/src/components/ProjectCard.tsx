@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { isUnauthorizedError } from "@/lib/authUtils";
 import { Button } from "@/components/ui/button";
-import type { Project } from "@shared/schema";
+import type { Project, User } from "@shared/schema";
 
 interface ProjectCardProps {
   project: Project;
@@ -28,13 +28,13 @@ export default function ProjectCard({ project, onViewDetails }: ProjectCardProps
   const categoryStyle = categoryStyles[project.category as keyof typeof categoryStyles] || categoryStyles.bots;
 
   // Check if project is liked
-  const { data: likeStatus } = useQuery({
+  const { data: likeStatus } = useQuery<{liked: boolean}>({
     queryKey: [`/api/projects/${project.id}/liked`],
     enabled: !!user,
     retry: false,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (likeStatus?.liked !== undefined) {
       setIsLiked(likeStatus.liked);
     }
@@ -113,7 +113,7 @@ export default function ProjectCard({ project, onViewDetails }: ProjectCardProps
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2 space-x-reverse">
             <span className="text-sm text-discord-text">
-              {project.authorId}
+              مطور
             </span>
           </div>
           <div className="flex items-center space-x-1 space-x-reverse">

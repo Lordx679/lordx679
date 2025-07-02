@@ -98,7 +98,9 @@ This is a full-stack web application for showcasing and managing Discord-related
 
 ## Changelog
 - July 02, 2025. Initial setup
+- July 02, 2025. Updated authentication to use real user profile images instead of placeholder images
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+User preference: Display real user profile pictures from their accounts instead of using placeholder images.

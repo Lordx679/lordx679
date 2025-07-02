@@ -5,6 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import type { Project, User } from "@shared/schema";
 
+interface ProjectWithAuthor extends Project {
+  author: User;
+}
+
 interface ProjectModalProps {
   projectId: number;
   onClose: () => void;
@@ -18,7 +22,7 @@ const categoryStyles = {
 };
 
 export default function ProjectModal({ projectId, onClose }: ProjectModalProps) {
-  const { data: project, isLoading } = useQuery({
+  const { data: project, isLoading } = useQuery<ProjectWithAuthor>({
     queryKey: [`/api/projects/${projectId}`],
     retry: false,
   });
@@ -130,18 +134,22 @@ export default function ProjectModal({ projectId, onClose }: ProjectModalProps) 
             <div className="mb-6">
               <h3 className="text-xl font-semibold mb-3">المطور</h3>
               <div className="flex items-center space-x-3 space-x-reverse">
-                <img 
-                  src={project.author.profileImageUrl || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=40&h=40&fit=crop&crop=face"}
-                  alt="Developer Avatar"
-                  className="w-10 h-10 rounded-full object-cover"
-                />
+                {project.author.profileImageUrl && (
+                  <img 
+                    src={project.author.profileImageUrl}
+                    alt="Developer Avatar"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                )}
                 <div>
                   <p className="font-medium">
                     {project.author.firstName && project.author.lastName 
                       ? `${project.author.firstName} ${project.author.lastName}`
                       : project.author.email?.split('@')[0] || 'مطور'}
                   </p>
-                  <p className="text-sm text-discord-text">{project.author.email}</p>
+                  {project.author.email && (
+                    <p className="text-sm text-discord-text">{project.author.email}</p>
+                  )}
                 </div>
               </div>
             </div>

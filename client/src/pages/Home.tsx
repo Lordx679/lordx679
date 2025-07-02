@@ -9,7 +9,7 @@ import SearchBar from "@/components/SearchBar";
 import AdminDashboard from "@/components/AdminDashboard";
 import ProjectModal from "@/components/ProjectModal";
 import { Button } from "@/components/ui/button";
-import type { Project } from "@shared/schema";
+import type { Project, User } from "@shared/schema";
 
 export default function Home() {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -34,15 +34,15 @@ export default function Home() {
     }
   }, [isAuthenticated, isLoading, toast]);
 
-  const { data: projects = [], isLoading: projectsLoading, refetch } = useQuery({
+  const { data: projects = [], isLoading: projectsLoading, refetch } = useQuery<Project[]>({
     queryKey: ["/api/projects", selectedCategory, searchQuery],
     enabled: isAuthenticated,
     retry: false,
   });
 
-  const { data: stats } = useQuery({
+  const { data: stats } = useQuery<{totalProjects: number; totalUsers: number; totalViews: number}>({
     queryKey: ["/api/admin/stats"],
-    enabled: isAuthenticated && user?.isAdmin,
+    enabled: isAuthenticated && (user as User)?.isAdmin,
     retry: false,
   });
 
@@ -85,7 +85,7 @@ export default function Home() {
                 <a href="#categories" className="text-discord-text hover:text-white transition-colors">
                   الفئات
                 </a>
-                {user?.isAdmin && (
+                {(user as User)?.isAdmin && (
                   <button
                     onClick={() => setShowAdminDashboard(true)}
                     className="text-discord-text hover:text-white transition-colors"
@@ -100,16 +100,18 @@ export default function Home() {
               <SearchBar onSearch={setSearchQuery} />
               
               <div className="flex items-center space-x-3 space-x-reverse">
-                <div className="relative">
-                  <img 
-                    src={user?.profileImageUrl || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&w=40&h=40&fit=crop&crop=face"} 
-                    alt="User Avatar" 
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-discord-green rounded-full border-2 border-discord-darker"></div>
-                </div>
+                {(user as User)?.profileImageUrl && (
+                  <div className="relative">
+                    <img 
+                      src={(user as User).profileImageUrl!} 
+                      alt="User Avatar" 
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                    <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-discord-green rounded-full border-2 border-discord-darker"></div>
+                  </div>
+                )}
                 <span className="text-sm font-medium">
-                  {user?.firstName || user?.email?.split('@')[0] || 'مستخدم'}
+                  {(user as User)?.firstName || (user as User)?.email?.split('@')[0] || 'مستخدم'}
                 </span>
                 <Button
                   variant="ghost"
@@ -125,7 +127,7 @@ export default function Home() {
         </div>
       </nav>
 
-      {showAdminDashboard && user?.isAdmin ? (
+      {showAdminDashboard && (user as User)?.isAdmin ? (
         <AdminDashboard stats={stats} onProjectAdded={() => refetch()} />
       ) : (
         <>
