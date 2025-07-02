@@ -118,7 +118,8 @@ export default function ProjectCard({ project, onViewDetails, onEdit, onDelete }
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (window.confirm('هل أنت متأكد من حذف هذا المشروع؟')) {
+    const result = window.confirm(`هل تريد حذف المشروع "${project.title}"؟\n\nلا يمكن التراجع عن هذا الإجراء.`);
+    if (result) {
       deleteMutation.mutate();
     }
   };
@@ -196,7 +197,8 @@ export default function ProjectCard({ project, onViewDetails, onEdit, onDelete }
               variant="outline"
               size="sm"
               onClick={handleEdit}
-              className="bg-discord-dark hover:bg-discord-darker border-discord-dark text-discord-yellow hover:text-yellow-400"
+              className="bg-blue-600 hover:bg-blue-700 border-blue-600 text-white hover:text-white transition-all"
+              title="تحديث المشروع"
             >
               <i className="fas fa-edit"></i>
             </Button>
@@ -208,7 +210,8 @@ export default function ProjectCard({ project, onViewDetails, onEdit, onDelete }
               size="sm"
               onClick={handleDelete}
               disabled={deleteMutation.isPending}
-              className="bg-discord-dark hover:bg-discord-darker border-discord-dark text-discord-red hover:text-red-400"
+              className="bg-red-600 hover:bg-red-700 border-red-600 text-white hover:text-white transition-all"
+              title="حذف المشروع"
             >
               <i className={`fas fa-trash ${deleteMutation.isPending ? 'animate-pulse' : ''}`}></i>
             </Button>
