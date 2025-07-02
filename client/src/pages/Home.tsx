@@ -9,6 +9,7 @@ import SearchBar from "@/components/SearchBar";
 import AdminDashboard from "@/components/AdminDashboard";
 import ProjectModal from "@/components/ProjectModal";
 import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 import type { Project, User } from "@shared/schema";
 
 export default function Home() {
@@ -48,12 +49,84 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-discord-darkest flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-discord-blurple mx-auto mb-4"></div>
-          <p className="text-discord-text">جاري التحميل...</p>
+      <motion.div 
+        className="min-h-screen bg-gradient-to-br from-discord-darkest via-discord-dark to-discord-elevated flex items-center justify-center overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          <motion.div 
+            className="absolute top-1/4 left-1/4 w-64 h-64 bg-discord-blurple/20 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl"
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.4, 0.7, 0.4],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+          />
         </div>
-      </div>
+
+        <motion.div 
+          className="text-center relative z-10"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
+        >
+          <motion.div 
+            className="relative mx-auto mb-8"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          >
+            <div className="w-20 h-20 border-4 border-transparent border-t-discord-blurple border-r-purple-500 rounded-full"></div>
+            <motion.div 
+              className="absolute inset-2 w-16 h-16 border-4 border-transparent border-b-pink-500 border-l-discord-green rounded-full"
+              animate={{ rotate: -360 }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+            />
+          </motion.div>
+          
+          <motion.h2 
+            className="text-2xl font-bold bg-gradient-to-r from-discord-blurple via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4"
+            animate={{ 
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+            }}
+            transition={{ 
+              duration: 2,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            style={{ backgroundSize: "200% 200%" }}
+          >
+            جاري التحميل...
+          </motion.h2>
+          
+          <motion.p 
+            className="text-gray-400"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            إعداد منصة المشاريع
+          </motion.p>
+        </motion.div>
+      </motion.div>
     );
   }
 
@@ -62,70 +135,175 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-discord-darkest text-white" dir="rtl">
+    <motion.div 
+      className="min-h-screen bg-gradient-to-br from-discord-darkest via-discord-dark to-discord-elevated text-white overflow-hidden" 
+      dir="rtl"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      {/* Animated Background Elements */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          className="absolute -top-40 -right-40 w-80 h-80 bg-discord-blurple/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3],
+            x: [0, 50, 0],
+            y: [0, -30, 0]
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute top-1/2 -left-40 w-60 h-60 bg-purple-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.2, 0.4, 0.2],
+            x: [0, -30, 0],
+            y: [0, 40, 0]
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
+          }}
+        />
+      </div>
+
       {/* Navigation Header */}
-      <nav className="bg-discord-darker border-b border-discord-dark sticky top-0 z-50">
+      <motion.nav 
+        className="bg-black/20 backdrop-blur-sm border-b border-white/10 sticky top-0 z-50"
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4 space-x-reverse">
-              <div className="flex items-center">
-                <i className="fab fa-discord text-discord-blurple text-2xl ml-3"></i>
-                <span className="text-xl font-bold">مشاريع ديسكورد</span>
-              </div>
+              <motion.div 
+                className="flex items-center"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                <motion.i 
+                  className="fas fa-code text-discord-blurple text-2xl ml-3"
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                />
+                <span className="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                  منصة مشاريع التطوير
+                </span>
+              </motion.div>
+              
               <div className="hidden md:flex space-x-6 space-x-reverse">
-                <button 
-                  onClick={() => setShowAdminDashboard(false)}
-                  className="text-discord-text hover:text-white transition-colors"
-                >
-                  الرئيسية
-                </button>
-                <a href="#projects" className="text-discord-text hover:text-white transition-colors">
-                  المشاريع
-                </a>
-                <a href="#categories" className="text-discord-text hover:text-white transition-colors">
-                  الفئات
-                </a>
-                {(user as User)?.isAdmin && (
-                  <button
-                    onClick={() => setShowAdminDashboard(true)}
-                    className="text-discord-text hover:text-white transition-colors"
+                {[
+                  { text: "الرئيسية", action: () => setShowAdminDashboard(false) },
+                  { text: "المشاريع", href: "#projects" },
+                  { text: "الفئات", href: "#categories" }
+                ].map((item, index) => (
+                  <motion.button
+                    key={index}
+                    onClick={item.action}
+                    className="text-gray-400 hover:text-white transition-colors relative group"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
                   >
-                    لوحة التحكم
-                  </button>
+                    {item.text}
+                    <motion.div
+                      className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-discord-blurple to-purple-500 group-hover:w-full transition-all duration-300"
+                      layoutId="navbar-indicator"
+                    />
+                  </motion.button>
+                ))}
+                
+                {(user as User)?.isAdmin && (
+                  <motion.button
+                    onClick={() => setShowAdminDashboard(true)}
+                    className="text-gray-400 hover:text-white transition-colors relative group"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.4, type: "spring", stiffness: 200 }}
+                  >
+                    <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent font-bold">
+                      لوحة التحكم
+                    </span>
+                    <motion.div
+                      className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-500 group-hover:w-full transition-all duration-300"
+                    />
+                  </motion.button>
                 )}
               </div>
             </div>
             
             <div className="flex items-center space-x-4 space-x-reverse">
-              <SearchBar onSearch={setSearchQuery} />
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <SearchBar onSearch={setSearchQuery} />
+              </motion.div>
               
-              <div className="flex items-center space-x-3 space-x-reverse">
+              <motion.div 
+                className="flex items-center space-x-3 space-x-reverse"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
                 {(user as User)?.profileImageUrl && (
-                  <div className="relative">
-                    <img 
+                  <motion.div 
+                    className="relative"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    <motion.img 
                       src={(user as User).profileImageUrl!} 
                       alt="User Avatar" 
-                      className="w-8 h-8 rounded-full object-cover"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-discord-blurple/50"
+                      whileHover={{ borderColor: "rgba(139, 92, 246, 1)" }}
                     />
-                    <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-discord-green rounded-full border-2 border-discord-darker"></div>
-                  </div>
+                    <motion.div 
+                      className="absolute -bottom-1 -right-1 w-3 h-3 bg-discord-green rounded-full border-2 border-discord-darker"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    />
+                  </motion.div>
                 )}
-                <span className="text-sm font-medium">
-                  {(user as User)?.firstName || (user as User)?.email?.split('@')[0] || 'مستخدم'}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => window.location.href = "/api/logout"}
-                  className="text-discord-text hover:text-white"
+                <motion.span 
+                  className="text-sm font-medium bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+                  whileHover={{ scale: 1.05 }}
                 >
-                  <i className="fas fa-sign-out-alt"></i>
-                </Button>
-              </div>
+                  {(user as User)?.firstName || (user as User)?.email?.split('@')[0] || 'مستخدم'}
+                </motion.span>
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => window.location.href = "/api/logout"}
+                    className="text-gray-400 hover:text-red-400 transition-colors"
+                  >
+                    <motion.i 
+                      className="fas fa-sign-out-alt"
+                      whileHover={{ rotate: 180 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </Button>
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {showAdminDashboard && (user as User)?.isAdmin ? (
         <AdminDashboard stats={stats} onProjectAdded={() => refetch()} />
@@ -229,6 +407,6 @@ export default function Home() {
           onClose={() => setSelectedProject(null)}
         />
       )}
-    </div>
+    </motion.div>
   );
 }
