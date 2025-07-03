@@ -1,8 +1,8 @@
 // GitHub OAuth Configuration
 // These values are set here instead of using secrets for hosting deployment
 export const GITHUB_CONFIG = {
-  clientId: "YOUR_GITHUB_CLIENT_ID_HERE",
-  clientSecret: "YOUR_GITHUB_CLIENT_SECRET_HERE"
+  clientId: "Ov23lihaX4CSTXNgP0F4",
+  clientSecret: "39c16791e0e0438def3f45e67fa84cb848a746ff"
 };
 
 // Session configuration
