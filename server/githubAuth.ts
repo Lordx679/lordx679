@@ -4,6 +4,7 @@ import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
+import { GITHUB_CONFIG, SESSION_CONFIG } from "./config";
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
@@ -15,7 +16,7 @@ export function getSession() {
     tableName: "sessions",
   });
   return session({
-    secret: process.env.SESSION_SECRET!,
+    secret: SESSION_CONFIG.secret,
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
@@ -34,10 +35,12 @@ export async function setupAuth(app: Express) {
   app.use(passport.session());
 
   // GitHub OAuth Strategy - only setup if credentials are available
-  if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+  if (GITHUB_CONFIG.clientId && GITHUB_CONFIG.clientSecret && 
+      GITHUB_CONFIG.clientId !== "YOUR_GITHUB_CLIENT_ID_HERE" && 
+      GITHUB_CONFIG.clientSecret !== "YOUR_GITHUB_CLIENT_SECRET_HERE") {
     passport.use(new GitHubStrategy({
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      clientID: GITHUB_CONFIG.clientId,
+      clientSecret: GITHUB_CONFIG.clientSecret,
       callbackURL: `https://${process.env.REPLIT_DEV_DOMAIN || 'localhost:5000'}/api/auth/github/callback`,
       scope: ['user:email']
     },
@@ -89,7 +92,7 @@ export async function setupAuth(app: Express) {
   } else {
     // Fallback routes when GitHub OAuth is not configured
     app.get("/api/login", (req, res) => {
-      res.status(503).json({ message: "GitHub OAuth not configured. Please add GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET environment variables." });
+      res.status(503).json({ message: "GitHub OAuth not configured. Please update GITHUB_CONFIG in server/config.ts with your GitHub OAuth credentials." });
     });
 
     app.get("/api/auth/github/callback", (req, res) => {

@@ -85,10 +85,14 @@ This is a full-stack web application for showcasing and managing Discord-related
 3. **Database**: Drizzle pushes schema changes
 
 ### Environment Variables
-- `DATABASE_URL`: PostgreSQL connection string
-- `SESSION_SECRET`: Session encryption key
-- `REPL_ID`: Replit environment identifier
-- `ISSUER_URL`: OAuth issuer endpoint
+- `DATABASE_URL`: PostgreSQL connection string (automatically configured)
+- `REPL_ID`: Replit environment identifier (automatically configured)
+
+### Configuration Files
+- `server/config.ts`: Contains GitHub OAuth credentials and session configuration
+  - Update `GITHUB_CONFIG.clientId` with your GitHub OAuth App Client ID
+  - Update `GITHUB_CONFIG.clientSecret` with your GitHub OAuth App Client Secret
+  - Update `SESSION_CONFIG.secret` with a secure session secret for production
 
 ### Production Setup
 - **Static Files**: Served from `/dist/public`
@@ -108,6 +112,7 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 02, 2025. Implemented real file upload system with multer for project files and images
 - July 02, 2025. Fixed runtime error overlay issue by replacing category buttons with dropdown selector
 - July 02, 2025. Added "مصممين" (Designers) category with custom delete confirmation modal
+- July 03, 2025. Moved GitHub OAuth credentials from environment secrets to configuration file (server/config.ts) for easier hosting deployment
 
 ## User Preferences
 
