@@ -116,6 +116,9 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 03, 2025. Created comprehensive configuration system with environment-based config file (server/config.env.ts) containing all settings: database, auth, admin permissions, file uploads, security, and feature flags
 - July 03, 2025. Updated all server files to use centralized configuration system instead of hardcoded values
 - July 03, 2025. Enhanced admin system to support config-based admin user list alongside database admin flags
+- July 04, 2025. Converted database system from PostgreSQL with Drizzle ORM to MongoDB with native driver
+- July 04, 2025. Created MongoDB-compatible schema and storage layer with string-based IDs instead of numeric
+- July 04, 2025. Implemented temporary in-memory storage for development until MongoDB connection is established
 
 ## User Preferences
 

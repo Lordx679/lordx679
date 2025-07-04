@@ -1,6 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./storage-memory";
 import { setupAuth, isAuthenticated } from "./githubAuth";
 import { insertProjectSchema } from "@shared/schema";
 import { z } from "zod";
@@ -84,7 +84,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get('/api/projects/:id', async (req, res) => {
     try {
-      const id = parseInt(req.params.id);
+      const id = req.params.id;
       const project = await storage.getProjectWithAuthor(id);
       
       if (!project) {
@@ -112,8 +112,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       console.log('Received project data:', req.body);
+      // Clean null values to undefined for MongoDB compatibility
+      const bodyData = { ...req.body };
+      Object.keys(bodyData).forEach(key => {
+        if (bodyData[key] === null) {
+          delete bodyData[key];
+        }
+      });
+
       const validatedData = insertProjectSchema.parse({
-        ...req.body,
+        ...bodyData,
         authorId: userId,
       });
       console.log('Validated project data:', validatedData);
@@ -139,8 +147,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "Admin access required" });
       }
 
-      const id = parseInt(req.params.id);
-      const updates = insertProjectSchema.partial().parse(req.body);
+      const id = req.params.id;
+      
+      // Clean null values to undefined for MongoDB compatibility
+      const bodyData = { ...req.body };
+      Object.keys(bodyData).forEach(key => {
+        if (bodyData[key] === null) {
+          delete bodyData[key];
+        }
+      });
+      
+      const updates = insertProjectSchema.partial().parse(bodyData);
       
       const project = await storage.updateProject(id, updates);
       
@@ -168,7 +185,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "Admin access required" });
       }
 
-      const id = parseInt(req.params.id);
+      const id = req.params.id;
       const success = await storage.deleteProject(id);
       
       if (!success) {
@@ -186,7 +203,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/projects/:id/like', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.id;
-      const projectId = parseInt(req.params.id);
+      const projectId = req.params.id;
       
       const isLiked = await storage.isProjectLiked(projectId, userId);
       
@@ -207,7 +224,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/projects/:id/liked', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.id;
-      const projectId = parseInt(req.params.id);
+      const projectId = req.params.id;
       
       const isLiked = await storage.isProjectLiked(projectId, userId);
       res.json({ liked: isLiked });
