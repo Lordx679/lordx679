@@ -127,6 +127,8 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 04, 2025. Updated configuration to use /.netlify/functions as API endpoint with proper redirects
 - July 04, 2025. Cleaned up duplicate configuration files - removed redundant server/config.ts and unified all settings in a single config file
 - July 04, 2025. Updated session secret with secure production-ready value
+- July 04, 2025. Created comprehensive .env file with all production environment variables including MongoDB connection, GitHub OAuth, and admin configuration
+- July 04, 2025. Updated database URL to use correct MongoDB Atlas connection string with proper app name
 
 ## User Preferences
 

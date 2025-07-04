@@ -72,7 +72,7 @@ interface FeatureFlags {
 
 // Database Configuration  
 export const DATABASE_CONFIG: DatabaseConfig = {
-  url: process.env.MONGODB_URL || "mongodb+srv://codex-us2:codex-us2@codex-us2.62zm1.mongodb.net/discord-projects?retryWrites=true&w=majority",
+  url: process.env.DATABASE_URL || "mongodb+srv://codex-us2:codex-us2@codex-us2.62zm1.mongodb.net/?retryWrites=true&w=majority&appName=codex-us2",
   maxConnections: parseInt(process.env.DB_MAX_CONNECTIONS || "10"),
   connectionTimeout: parseInt(process.env.DB_TIMEOUT || "30000")
 };
