@@ -4,7 +4,7 @@ import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import connectPg from "connect-pg-simple";
 import { storage } from "./storage";
-import { GITHUB_CONFIG, SESSION_CONFIG } from "./config";
+import config from "./config";
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
@@ -16,13 +16,13 @@ export function getSession() {
     tableName: "sessions",
   });
   return session({
-    secret: SESSION_CONFIG.secret,
+    secret: config.session.secret,
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: config.session.secure,
       maxAge: sessionTtl,
     },
   });
@@ -35,12 +35,12 @@ export async function setupAuth(app: Express) {
   app.use(passport.session());
 
   // GitHub OAuth Strategy - only setup if credentials are available
-  if (GITHUB_CONFIG.clientId && GITHUB_CONFIG.clientSecret && 
-      GITHUB_CONFIG.clientId !== "YOUR_GITHUB_CLIENT_ID_HERE" && 
-      GITHUB_CONFIG.clientSecret !== "YOUR_GITHUB_CLIENT_SECRET_HERE") {
+  if (config.github.clientId && config.github.clientSecret && 
+      config.github.clientId !== "YOUR_GITHUB_CLIENT_ID_HERE" && 
+      config.github.clientSecret !== "YOUR_GITHUB_CLIENT_SECRET_HERE") {
     passport.use(new GitHubStrategy({
-      clientID: GITHUB_CONFIG.clientId,
-      clientSecret: GITHUB_CONFIG.clientSecret,
+      clientID: config.github.clientId,
+      clientSecret: config.github.clientSecret,
       callbackURL: `https://${process.env.REPLIT_DEV_DOMAIN || 'localhost:5000'}/api/auth/github/callback`,
       scope: ['user:email']
     },

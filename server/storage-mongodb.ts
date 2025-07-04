@@ -1,5 +1,5 @@
 import { MongoClient, Db, Collection, ObjectId } from 'mongodb';
-import config from './config.env.ts';
+import config from './config.ts';
 
 // MongoDB interfaces
 export interface User {
