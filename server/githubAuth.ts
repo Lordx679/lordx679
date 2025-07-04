@@ -84,9 +84,10 @@ export async function setupAuth(app: Express) {
     app.get("/api/login", passport.authenticate("github"));
 
     app.get("/api/auth/github/callback", 
-      passport.authenticate("github", { failureRedirect: "/" }),
+      passport.authenticate("github", { failureRedirect: "/?error=auth_failed" }),
       (req, res) => {
-        res.redirect("/");
+        console.log("GitHub OAuth callback successful, user:", req.user);
+        res.redirect("/?auth=success");
       }
     );
   } else {
