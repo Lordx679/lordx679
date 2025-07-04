@@ -21,9 +21,31 @@
 DATABASE_URL=mongodb+srv://codex-us2:codex-us2@codex-us2.62zm1.mongodb.net/?retryWrites=true&w=majority&appName=codex-us2
 GITHUB_CLIENT_ID=Ov23lihaX4CSTXNgP0F4
 GITHUB_CLIENT_SECRET=39c16791e0e0438def3f45e67fa84cb848a746ff
-SESSION_SECRET=your_secure_session_secret
+SESSION_SECRET=nuEdb4WjWWj/JQ5qex1mbx5Ia1cn11A0uXySXKAFlzQCJMy5URYBEHjy8uLGU4/vptQT6E+2gtlYjNevSbM06w==
 ADMIN_USERS=["190771533"]
 ```
+
+### 2. إعداد GitHub OAuth Callback URLs
+
+**مهم جداً**: لاستخدام GitHub OAuth مع كل من Replit وNetlify، تحتاج إلى إضافة عدة callback URLs في تطبيق GitHub OAuth:
+
+1. **انتقل إلى GitHub Developer Settings**:
+   - اذهب إلى https://github.com/settings/developers
+   - اضغط على "OAuth Apps"
+   - ابحث عن التطبيق (Client ID: `Ov23lihaX4CSTXNgP0F4`)
+
+2. **أضف Callback URLs متعددة**:
+   ```
+   # للتطوير على Replit
+   https://b7ceafba-f681-4c0e-8b37-5a6a30548e1b-00-dbkkclcrhexb.riker.replit.dev/api/auth/github/callback
+   
+   # للإنتاج على Netlify (استبدل YOUR-SITE-NAME باسم موقعك)
+   https://YOUR-SITE-NAME.netlify.app/api/auth/github/callback
+   ```
+
+3. **GitHub يدعم عدة callback URLs**:
+   - يمكنك إضافة كل URL في سطر منفصل
+   - سيعمل التطبيق تلقائياً مع البيئة الصحيحة
 
 ### 2. اختبار البناء محلياً
 
