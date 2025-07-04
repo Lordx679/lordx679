@@ -79,23 +79,8 @@ export const DATABASE_CONFIG: DatabaseConfig = {
 
 // GitHub OAuth Configuration
 function getCallbackURL() {
-  // If explicitly set in environment, use that
-  if (process.env.GITHUB_CALLBACK_URL) {
-    return process.env.GITHUB_CALLBACK_URL;
-  }
-  
-  // For Netlify deployment
-  if (process.env.URL) {
-    return `${process.env.URL}/api/auth/github/callback`;
-  }
-  
-  // For Replit development
-  if (process.env.REPLIT_DEV_DOMAIN) {
-    return `https://${process.env.REPLIT_DEV_DOMAIN}/api/auth/github/callback`;
-  }
-  
-  // Fallback for local development
-  return 'http://localhost:5000/api/auth/github/callback';
+  // Force use of Replit domain for now
+  return `https://${process.env.REPLIT_DEV_DOMAIN || 'b7ceafba-f681-4c0e-8b37-5a6a30548e1b-00-dbkkclcrhexb.riker.replit.dev'}/api/auth/github/callback`;
 }
 
 export const GITHUB_CONFIG = {
