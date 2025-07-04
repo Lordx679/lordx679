@@ -3,7 +3,7 @@ import { Strategy as GitHubStrategy } from "passport-github2";
 import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import connectPg from "connect-pg-simple";
-import { storage } from "./storage";
+import { storage } from "./storage-mongodb";
 import config from "./config";
 
 export function getSession() {
@@ -41,7 +41,7 @@ export async function setupAuth(app: Express) {
     passport.use(new GitHubStrategy({
       clientID: config.github.clientId,
       clientSecret: config.github.clientSecret,
-      callbackURL: `https://${process.env.REPLIT_DEV_DOMAIN || 'localhost:5000'}/api/auth/github/callback`,
+      callbackURL: config.github.callbackURL,
       scope: ['user:email']
     },
     async (accessToken: string, refreshToken: string, profile: any, done: any) => {
@@ -50,11 +50,11 @@ export async function setupAuth(app: Express) {
         const email = profile.emails?.find((e: any) => e.primary)?.value || profile.emails?.[0]?.value;
         
         const user = await storage.upsertUser({
-          id: profile.id,
+          _id: profile.id,
           email: email,
           firstName: profile.displayName?.split(' ')[0] || profile.username,
-          lastName: profile.displayName?.split(' ').slice(1).join(' ') || null,
-          profileImageUrl: profile.photos?.[0]?.value || null,
+          lastName: profile.displayName?.split(' ').slice(1).join(' ') || '',
+          profileImageUrl: profile.photos?.[0]?.value || undefined,
         });
         
         return done(null, user);
@@ -64,7 +64,7 @@ export async function setupAuth(app: Express) {
     }));
 
     passport.serializeUser((user: any, done) => {
-      done(null, user.id);
+      done(null, user._id);
     });
 
     passport.deserializeUser(async (id: string, done) => {

@@ -81,7 +81,7 @@ export const DATABASE_CONFIG: DatabaseConfig = {
 export const GITHUB_CONFIG = {
   clientId: process.env.GITHUB_CLIENT_ID || "Ov23lihaX4CSTXNgP0F4",
   clientSecret: process.env.GITHUB_CLIENT_SECRET || "39c16791e0e0438def3f45e67fa84cb848a746ff",
-  callbackURL: process.env.GITHUB_CALLBACK_URL || "/api/auth/github/callback"
+  callbackURL: process.env.GITHUB_CALLBACK_URL || `https://${process.env.REPLIT_DEV_DOMAIN || 'localhost:5000'}/api/auth/github/callback`
 };
 
 // Session Configuration
