@@ -86,7 +86,7 @@ function getCallbackURL() {
 export const GITHUB_CONFIG = {
   clientId: process.env.GITHUB_CLIENT_ID || "Ov23lipN5ASsnC3ovIiv",
   clientSecret: process.env.GITHUB_CLIENT_SECRET || "7e87124cd44fba88996ac4e7ab1331937c10f4c1",
-  callbackURL: getCallbackURL()
+  callbackURL: "https://discordworld.netlify.app/api/auth/github/callback",
 };
 
 // Session Configuration
