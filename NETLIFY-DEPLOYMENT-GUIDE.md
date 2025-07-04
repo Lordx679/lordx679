@@ -4,53 +4,25 @@
 
 هذا المشروع يتكون من:
 - **Frontend**: React + TypeScript + Vite
-- **Backend**: Express + Node.js + MongoDB
+- **Backend**: Netlify Functions (Serverless)
 - **Database**: MongoDB Atlas
 
-⚠️ **مهم**: Netlify يستضيف فقط المواقع الثابتة (Frontend)، لذا ستحتاج إلى استضافة Backend منفصلة.
+✅ **الآن يمكن استضافة المشروع بالكامل على Netlify!** تم تحويل Backend إلى Netlify Functions.
 
-## الخطوة 1: استضافة Backend أولاً
+## الخطوة 1: التحضير للنشر على Netlify
 
-### خيارات استضافة Backend الموصى بها:
+المشروع جاهز للنشر المباشر على Netlify! لا تحتاج إلى خدمات استضافة إضافية.
 
-1. **Railway.app** (الأسهل)
-   - يدعم Node.js مباشرة
-   - يوفر MongoDB مجاني
-   - نشر تلقائي من GitHub
+### 1. متغيرات البيئة المطلوبة
 
-2. **Render.com** 
-   - خطة مجانية متاحة
-   - يدعم Node.js
-   - نشر من GitHub
+ستحتاج إلى إضافة هذه المتغيرات في إعدادات Netlify:
 
-3. **Heroku** (مدفوع)
-   - موثوق وسريع
-   - دعم ممتاز
-
-### خطوات نشر Backend على Railway:
-
-1. اذهب إلى [railway.app](https://railway.app)
-2. انقر "Start a New Project"
-3. اختر "Deploy from GitHub repo"
-4. اربط مستودع GitHub
-5. أضف المتغيرات التالية في Railway:
-   ```
-   DATABASE_URL=mongodb+srv://codex-us2:codex-us2@codex-us2.62zm1.mongodb.net/discord-projects
-   GITHUB_CLIENT_ID=your_github_client_id
-   GITHUB_CLIENT_SECRET=your_github_client_secret
-   SESSION_SECRET=your_session_secret
-   NODE_ENV=production
-   ```
-6. Railway سينشر Backend تلقائياً
-7. احصل على رابط Backend (مثل: https://your-app.railway.app)
-
-## الخطوة 2: تحضير Frontend للنشر على Netlify
-
-### 1. تحديث متغيرات البيئة
-
-أنشئ ملف `.env` في المجلد الرئيسي:
 ```env
-VITE_API_URL=https://your-backend-url.railway.app
+DATABASE_URL=mongodb+srv://codex-us2:codex-us2@codex-us2.62zm1.mongodb.net/?retryWrites=true&w=majority&appName=codex-us2
+GITHUB_CLIENT_ID=Ov23lihaX4CSTXNgP0F4
+GITHUB_CLIENT_SECRET=39c16791e0e0438def3f45e67fa84cb848a746ff
+SESSION_SECRET=your_secure_session_secret
+ADMIN_USERS=["190771533"]
 ```
 
 ### 2. اختبار البناء محلياً
@@ -63,7 +35,7 @@ npm run build
 ls -la dist/public/
 ```
 
-## الخطوة 3: النشر على Netlify
+## الخطوة 2: النشر على Netlify
 
 ### الطريقة الأولى: من GitHub (موصى بها)
 
@@ -84,14 +56,18 @@ ls -la dist/public/
    Base directory: (اتركه فارغ)
    Build command: npm run build
    Publish directory: dist/public
+   Functions directory: netlify/functions
    ```
 
 5. **متغيرات البيئة**
    - انقر "Show advanced"
-   - أضف متغير:
+   - أضف المتغيرات التالية:
      ```
-     Key: VITE_API_URL
-     Value: https://your-backend-url.railway.app
+     DATABASE_URL: mongodb+srv://codex-us2:codex-us2@codex-us2.62zm1.mongodb.net/?retryWrites=true&w=majority&appName=codex-us2
+     GITHUB_CLIENT_ID: Ov23lihaX4CSTXNgP0F4
+     GITHUB_CLIENT_SECRET: 39c16791e0e0438def3f45e67fa84cb848a746ff
+     SESSION_SECRET: your_secure_session_secret_here
+     ADMIN_USERS: ["190771533"]
      ```
 
 6. **انقر "Deploy site"**
@@ -107,12 +83,12 @@ ls -la dist/public/
    - اذهب إلى Netlify
    - اسحب مجلد `dist/public` إلى صفحة Netlify
 
-## الخطوة 4: تحديث GitHub OAuth
+## الخطوة 3: تحديث GitHub OAuth
 
 1. اذهب إلى GitHub Settings > Developer settings > OAuth Apps
 2. حدث OAuth App:
    - **Homepage URL**: https://your-site.netlify.app
-   - **Authorization callback URL**: https://your-backend-url.railway.app/auth/github/callback
+   - **Authorization callback URL**: https://your-site.netlify.app/api/auth/github/callback
 
 ## الخطوة 5: اختبار الموقع
 
@@ -179,14 +155,19 @@ rm -rf dist/
 echo $VITE_API_URL
 ```
 
-## البنية النهائية
+## البنية النهائية المبسطة
 
 ```
-┌─────────────────┐     ┌──────────────────┐     ┌─────────────┐
-│   Netlify       │────▶│    Railway       │────▶│  MongoDB    │
-│   (Frontend)    │     │   (Backend API)  │     │   Atlas     │
-└─────────────────┘     └──────────────────┘     └─────────────┘
+┌─────────────────────────────────┐     ┌─────────────┐
+│           Netlify               │────▶│  MongoDB    │
+│  ┌─────────────┐ ┌─────────────┐│     │   Atlas     │
+│  │  Frontend   │ │  Functions  ││     │             │
+│  │   (React)   │ │ (Serverless)││     │             │
+│  └─────────────┘ └─────────────┘│     │             │
+└─────────────────────────────────┘     └─────────────┘
 ```
+
+✅ **جميع المكونات في منصة واحدة!**
 
 ## الدعم
 

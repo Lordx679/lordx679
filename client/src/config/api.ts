@@ -27,5 +27,13 @@ export const API_CONFIG = {
 
 // Helper function to get full API URL
 export function getApiUrl(endpoint: string): string {
-  return `${API_CONFIG.baseUrl}${endpoint}`;
+  const baseUrl = API_CONFIG.baseUrl;
+  
+  // If using Netlify Functions, just return the endpoint as is
+  if (baseUrl === '/.netlify/functions') {
+    return endpoint;
+  }
+  
+  // Otherwise, prepend the base URL
+  return `${baseUrl}${endpoint}`;
 }
