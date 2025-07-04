@@ -39,8 +39,8 @@ ADMIN_USERS=["190771533"]
    # للتطوير على Replit
    https://b7ceafba-f681-4c0e-8b37-5a6a30548e1b-00-dbkkclcrhexb.riker.replit.dev/api/auth/github/callback
    
-   # للإنتاج على Netlify (استبدل YOUR-SITE-NAME باسم موقعك)
-   https://YOUR-SITE-NAME.netlify.app/api/auth/github/callback
+   # للإنتاج على Netlify
+   https://discordworld.netlify.app/api/auth/github/callback
    ```
 
 3. **GitHub يدعم عدة callback URLs**:
