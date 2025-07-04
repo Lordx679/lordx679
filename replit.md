@@ -113,6 +113,9 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 02, 2025. Fixed runtime error overlay issue by replacing category buttons with dropdown selector
 - July 02, 2025. Added "مصممين" (Designers) category with custom delete confirmation modal
 - July 03, 2025. Moved GitHub OAuth credentials from environment secrets to configuration file (server/config.ts) for easier hosting deployment
+- July 03, 2025. Created comprehensive configuration system with environment-based config file (server/config.env.ts) containing all settings: database, auth, admin permissions, file uploads, security, and feature flags
+- July 03, 2025. Updated all server files to use centralized configuration system instead of hardcoded values
+- July 03, 2025. Enhanced admin system to support config-based admin user list alongside database admin flags
 
 ## User Preferences
 

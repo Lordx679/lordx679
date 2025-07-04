@@ -10,6 +10,7 @@ import {
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql, ilike, and, count } from "drizzle-orm";
+import { ADMIN_CONFIG } from "./config";
 
 // Interface for storage operations
 export interface IStorage {
@@ -222,6 +223,12 @@ export class DatabaseStorage implements IStorage {
 
   // Admin operations
   async isUserAdmin(userId: string): Promise<boolean> {
+    // Check if user ID is in admin list from config
+    if (ADMIN_CONFIG.adminUsers.includes(userId)) {
+      return true;
+    }
+    
+    // Also check database admin flag for backwards compatibility
     const [user] = await db
       .select({ isAdmin: users.isAdmin })
       .from(users)

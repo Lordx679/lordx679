@@ -1,11 +1,80 @@
 // Configuration file that reads from environment variables
 // This file handles all secrets and sensitive configuration
 
-// Database Configuration
-export const DATABASE_CONFIG = {
+interface DatabaseConfig {
+  url: string;
+  maxConnections: number;
+  connectionTimeout: number;
+}
+
+interface GitHubConfig {
+  clientId: string;
+  clientSecret: string;
+  callbackURL: string;
+}
+
+interface SessionConfig {
+  secret: string;
+  name: string;
+  maxAge: number;
+  secure: boolean;
+  sameSite: "strict" | "lax" | "none";
+}
+
+interface AppConfig {
+  port: number;
+  environment: string;
+  domain: string;
+  corsOrigin: string;
+}
+
+interface AdminConfig {
+  adminUsers: string[];
+  permissions: {
+    canCreateProjects: boolean;
+    canEditAllProjects: boolean;
+    canDeleteProjects: boolean;
+    canManageUsers: boolean;
+    canViewStats: boolean;
+    canModerateContent: boolean;
+  };
+}
+
+interface UploadConfig {
+  maxFileSize: number;
+  allowedTypes: string[];
+  uploadPath: string;
+  publicPath: string;
+}
+
+interface SecurityConfig {
+  rateLimitWindow: number;
+  rateLimitMax: number;
+  bcryptRounds: number;
+  jwtExpiry: string;
+}
+
+interface EmailConfig {
+  smtpHost: string;
+  smtpPort: number;
+  smtpUser: string;
+  smtpPass: string;
+  fromEmail: string;
+}
+
+interface FeatureFlags {
+  enableEmailNotifications: boolean;
+  enableFileUploads: boolean;
+  enableRateLimiting: boolean;
+  enableAnalytics: boolean;
+  maintenanceMode: boolean;
+}
+
+// Database Configuration  
+export const DATABASE_CONFIG: DatabaseConfig = {
   url: process.env.DATABASE_URL || "postgresql://username:password@localhost:5432/database_name",
-  maxConnections: parseInt(process.env.DB_MAX_CONNECTIONS) || 10,
-  connectionTimeout: parseInt(process.env.DB_TIMEOUT) || 30000
+  maxConnections: parseInt(process.env.DB_MAX_CONNECTIONS || "10"),
+  connectionTimeout: parseInt(process.env.DB_TIMEOUT || "30000")
 };
 
 // GitHub OAuth Configuration
@@ -19,14 +88,14 @@ export const GITHUB_CONFIG = {
 export const SESSION_CONFIG = {
   secret: process.env.SESSION_SECRET || "your-session-secret-key-change-this-in-production",
   name: process.env.SESSION_NAME || "discord-projects-session",
-  maxAge: parseInt(process.env.SESSION_MAX_AGE) || (24 * 60 * 60 * 1000), // 24 hours
+  maxAge: parseInt(process.env.SESSION_MAX_AGE || "86400000"), // 24 hours
   secure: process.env.NODE_ENV === "production",
   sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax"
 };
 
 // Application Configuration
 export const APP_CONFIG = {
-  port: parseInt(process.env.PORT) || 5000,
+  port: parseInt(process.env.PORT || "5000"),
   environment: process.env.NODE_ENV || "development",
   domain: process.env.REPLIT_DEV_DOMAIN || "localhost",
   corsOrigin: process.env.CORS_ORIGIN || "*"
@@ -49,24 +118,24 @@ export const ADMIN_CONFIG = {
 
 // File Upload Configuration
 export const UPLOAD_CONFIG = {
-  maxFileSize: parseInt(process.env.MAX_FILE_SIZE) || 10 * 1024 * 1024, // 10MB
+  maxFileSize: parseInt(process.env.MAX_FILE_SIZE || "10485760"), // 10MB
   allowedTypes: (process.env.ALLOWED_FILE_TYPES || "zip,rar,7z,tar.gz,jpg,jpeg,png,gif").split(","),
   uploadPath: process.env.UPLOAD_PATH || "./uploads",
   publicPath: process.env.PUBLIC_PATH || "/uploads"
 };
 
 // Security Configuration
-export const SECURITY_CONFIG = {
-  rateLimitWindow: parseInt(process.env.RATE_LIMIT_WINDOW) || 15 * 60 * 1000, // 15 minutes
-  rateLimitMax: parseInt(process.env.RATE_LIMIT_MAX) || 100, // requests per window
-  bcryptRounds: parseInt(process.env.BCRYPT_ROUNDS) || 12,
+export const SECURITY_CONFIG: SecurityConfig = {
+  rateLimitWindow: parseInt(process.env.RATE_LIMIT_WINDOW || "900000"), // 15 minutes
+  rateLimitMax: parseInt(process.env.RATE_LIMIT_MAX || "100"), // requests per window
+  bcryptRounds: parseInt(process.env.BCRYPT_ROUNDS || "12"),
   jwtExpiry: process.env.JWT_EXPIRY || "7d"
 };
 
 // Email Configuration (for future features)
 export const EMAIL_CONFIG = {
   smtpHost: process.env.SMTP_HOST || "",
-  smtpPort: parseInt(process.env.SMTP_PORT) || 587,
+  smtpPort: parseInt(process.env.SMTP_PORT || "587"),
   smtpUser: process.env.SMTP_USER || "",
   smtpPass: process.env.SMTP_PASS || "",
   fromEmail: process.env.FROM_EMAIL || "noreply@discord-projects.com"

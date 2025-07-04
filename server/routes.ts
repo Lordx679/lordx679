@@ -7,11 +7,12 @@ import { z } from "zod";
 import multer from 'multer';
 import path from 'path';
 import { nanoid } from 'nanoid';
+import { UPLOAD_CONFIG } from "./config";
 
-// Configure multer for file uploads
+// Configure multer for file uploads with config settings
 const storage_multer = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'public/uploads/');
+    cb(null, UPLOAD_CONFIG.uploadPath);
   },
   filename: (req, file, cb) => {
     const uniqueName = nanoid() + path.extname(file.originalname);
@@ -22,14 +23,14 @@ const storage_multer = multer.diskStorage({
 const upload = multer({ 
   storage: storage_multer,
   limits: {
-    fileSize: 50 * 1024 * 1024, // 50MB limit
+    fileSize: UPLOAD_CONFIG.maxFileSize,
   },
   fileFilter: (req, file, cb) => {
-    const allowedTypes = /\.(zip|rar|7z|tar\.gz|jpg|jpeg|png|gif|webp)$/i;
-    if (allowedTypes.test(file.originalname)) {
+    const fileExt = path.extname(file.originalname).slice(1).toLowerCase();
+    if (UPLOAD_CONFIG.allowedTypes.includes(fileExt)) {
       cb(null, true);
     } else {
-      cb(new Error('Invalid file type'));
+      cb(new Error(`Invalid file type. Allowed types: ${UPLOAD_CONFIG.allowedTypes.join(', ')}`));
     }
   },
 });
