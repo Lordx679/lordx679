@@ -1,6 +1,6 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage-memory";
+import { storage } from "./storage-mongodb";
 import { setupAuth, isAuthenticated } from "./githubAuth";
 import { insertProjectSchema } from "@shared/schema";
 import { z } from "zod";

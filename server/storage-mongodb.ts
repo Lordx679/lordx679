@@ -86,9 +86,9 @@ export class MongoDBStorage implements IStorage {
   private projectLikes!: Collection<ProjectLike>;
 
   constructor() {
-    // Use MONGODB_URL first, then fallback to default MongoDB URL
-    const mongoUrl = process.env.MONGODB_URL || "mongodb://localhost:27017/discord-projects";
-    console.log('Connecting to MongoDB at:', mongoUrl);
+    // Use MONGODB_URL first, then fallback to config database URL
+    const mongoUrl = process.env.MONGODB_URL || config.database.url;
+    console.log('Connecting to MongoDB Atlas at:', mongoUrl.substring(0, 50) + '...');
     this.client = new MongoClient(mongoUrl);
   }
 
@@ -314,7 +314,35 @@ export class MongoDBStorage implements IStorage {
 // Create and export storage instance
 const mongoStorage = new MongoDBStorage();
 
-// Initialize connection
-mongoStorage.connect().catch(console.error);
+// Initialize connection and export a promise-based storage
+let storageReady = false;
 
-export const storage = mongoStorage;
+mongoStorage.connect()
+  .then(() => {
+    storageReady = true;
+    console.log('MongoDB storage ready');
+  })
+  .catch(console.error);
+
+// Wrapper to ensure connection before operations
+const ensureConnection = async () => {
+  if (!storageReady) {
+    await mongoStorage.connect();
+    storageReady = true;
+  }
+  return mongoStorage;
+};
+
+// Create a proxy storage that ensures connection
+export const storage = new Proxy(mongoStorage, {
+  get(target, prop) {
+    const method = target[prop as keyof MongoDBStorage];
+    if (typeof method === 'function') {
+      return async (...args: any[]) => {
+        await ensureConnection();
+        return (method as Function).apply(target, args);
+      };
+    }
+    return method;
+  }
+});

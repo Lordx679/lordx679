@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { APP_CONFIG, UPLOAD_CONFIG } from "./config";
+import { initializeDatabase } from "./init-mongodb";
 
 const app = express();
 app.use(express.json());
@@ -68,5 +69,10 @@ app.use((req, res, next) => {
     reusePort: true,
   }, () => {
     log(`serving on port ${port}`);
+    
+    // Initialize database with sample data
+    setTimeout(() => {
+      initializeDatabase().catch(console.error);
+    }, 2000); // Wait 2 seconds for server to fully start
   });
 })();
