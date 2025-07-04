@@ -20,7 +20,7 @@
 ```env
 DATABASE_URL=mongodb+srv://codex-us2:codex-us2@codex-us2.62zm1.mongodb.net/?retryWrites=true&w=majority&appName=codex-us2
 GITHUB_CLIENT_ID=Ov23lihaX4CSTXNgP0F4
-GITHUB_CLIENT_SECRET=39c16791e0e0438def3f45e67fa84cb848a746ff
+GITHUB_CLIENT_SECRET=05036e43f71f928b4b7b32584babbc0ba93d7546
 SESSION_SECRET=nuEdb4WjWWj/JQ5qex1mbx5Ia1cn11A0uXySXKAFlzQCJMy5URYBEHjy8uLGU4/vptQT6E+2gtlYjNevSbM06w==
 ADMIN_USERS=["190771533"]
 ```
