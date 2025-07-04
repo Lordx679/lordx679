@@ -145,7 +145,8 @@ exports.handler = async (event, context) => {
     
     // Login redirect
     if (path === '/api/login') {
-      const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&scope=user:email&redirect_uri=${process.env.URL}/api/auth/github/callback`;
+      const siteUrl = process.env.URL || 'https://discordworld.netlify.app';
+      const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&scope=user:email&redirect_uri=${siteUrl}/api/auth/github/callback`;
       return {
         statusCode: 302,
         headers: {
@@ -154,6 +155,77 @@ exports.handler = async (event, context) => {
         },
         body: '',
       };
+    }
+    
+    // GitHub OAuth callback
+    if (path === '/api/auth/github/callback' && method === 'GET') {
+      const { code } = event.queryStringParameters || {};
+      
+      if (!code) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ error: 'Missing authorization code' }),
+        };
+      }
+      
+      try {
+        // Exchange code for access token
+        const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            client_id: process.env.GITHUB_CLIENT_ID,
+            client_secret: process.env.GITHUB_CLIENT_SECRET,
+            code: code,
+          }),
+        });
+        
+        const tokenData = await tokenResponse.json();
+        
+        if (tokenData.error) {
+          return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({ error: tokenData.error_description }),
+          };
+        }
+        
+        // Get user info from GitHub
+        const userResponse = await fetch('https://api.github.com/user', {
+          headers: {
+            'Authorization': `token ${tokenData.access_token}`,
+            'Accept': 'application/vnd.github.v3+json',
+          },
+        });
+        
+        const userData = await userResponse.json();
+        
+        // Redirect to frontend with user data
+        const siteUrl = process.env.URL || 'https://discordworld.netlify.app';
+        return {
+          statusCode: 302,
+          headers: {
+            ...headers,
+            Location: `${siteUrl}?login=success&user=${encodeURIComponent(JSON.stringify({
+              id: userData.id.toString(),
+              name: userData.name || userData.login,
+              email: userData.email,
+              avatar: userData.avatar_url,
+            }))}`,
+          },
+          body: '',
+        };
+      } catch (error) {
+        return {
+          statusCode: 500,
+          headers,
+          body: JSON.stringify({ error: 'Authentication failed' }),
+        };
+      }
     }
     
     // Default 404

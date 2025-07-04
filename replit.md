@@ -132,6 +132,7 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 04, 2025. Fixed GitHub OAuth authentication by resolving session storage conflict between PostgreSQL and MongoDB
 - July 04, 2025. Created new GitHub OAuth App (Client ID: Ov23lipN5ASsnC3ovIiv) with proper callback URLs for both Replit and Netlify
 - July 04, 2025. Switched session storage from PostgreSQL to memory store for development compatibility with MongoDB backend
+- July 04, 2025. Cleaned up project by removing documentation files, deployment guides, troubleshooting files, and unused assets to reduce project size and complexity
 
 ## User Preferences
 

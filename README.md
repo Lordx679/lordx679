@@ -1,77 +1,44 @@
 # Discord Projects Platform
 
-منصة لعرض وإدارة مشاريع الديسكورد باللغة العربية مع واجهة عصرية وأنيقة.
+منصة لعرض وإدارة مشاريع الديسكورد - جاهزة للنشر على Netlify
 
-## الإعداد للاستضافة
+## 🚀 النشر على Netlify
 
-### 1. إعداد GitHub OAuth
+### الطريقة الأولى: من GitHub
+1. ارفع المشروع على GitHub
+2. ادخل على [netlify.com](https://netlify.com)
+3. اربط المستودع
+4. إعدادات البناء:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist/public`
+   - **Functions directory**: `netlify/functions`
 
-قبل رفع المشروع على الاستضافة، تحتاج لإعداد تطبيق GitHub OAuth:
-
-1. اذهب إلى [GitHub Developer Settings](https://github.com/settings/developers)
-2. انقر على "New OAuth App"
-3. املأ التفاصيل:
-   - **Application name**: اسم تطبيقك
-   - **Homepage URL**: رابط موقعك (مثال: `https://yoursite.com`)
-   - **Authorization callback URL**: `https://yoursite.com/api/auth/github/callback`
-
-### 2. تحديث ملف الإعدادات
-
-افتح ملف `server/config.ts` وحدث القيم التالية:
-
-```javascript
-export const GITHUB_CONFIG = {
-  clientId: "your_actual_github_client_id",
-  clientSecret: "your_actual_github_client_secret"
-};
-
-export const SESSION_CONFIG = {
-  secret: "a-very-secure-random-string-for-production"
-};
+### متغيرات البيئة المطلوبة:
+```
+DATABASE_URL=mongodb+srv://codex-us2:codex-us2@codex-us2.62zm1.mongodb.net/?retryWrites=true&w=majority&appName=codex-us2
+GITHUB_CLIENT_ID=Ov23lipN5ASsnC3ovIiv
+GITHUB_CLIENT_SECRET=7e87124cd44fba88996ac4e7ab1331937c10f4c1
+SESSION_SECRET=nuEdb4WjWWj/JQ5qex1mbx5Ia1cn11A0uXySXKAFlzQCJMy5URYBEHjy8uLGU4/vptQT6E+2gtlYjNevSbM06w==
+ADMIN_USERS=["190771533"]
 ```
 
-### 3. إعداد قاعدة البيانات
+### بعد النشر:
+1. احصل على رابط الموقع من Netlify
+2. حدث GitHub OAuth callback URL:
+   - اذهب إلى GitHub Settings > Developer settings > OAuth Apps
+   - حدث Authorization callback URL إلى: `https://your-site.netlify.app/api/auth/github/callback`
 
-المشروع يستخدم PostgreSQL. تأكد من:
-- إعداد متغير البيئة `DATABASE_URL` في الاستضافة
-- تشغيل `npm run db:push` لإنشاء الجداول
+## ✅ الميزات
+- تسجيل دخول عبر GitHub
+- إدارة المشاريع
+- رفع الملفات
+- نظام الإعجابات
+- لوحة تحكم الإدارة
+- تصميم عصري ومتجاوب
 
-### 4. البناء والنشر
-
-```bash
-# تثبيت التبعيات
-npm install
-
-# بناء المشروع
-npm run build
-
-# تشغيل الخادم
-npm start
-```
-
-## الميزات
-
-- 🔐 تسجيل دخول آمن عبر GitHub
-- 🎨 تصميم عصري بألوان البنفسجي الأنيق
-- 📱 متجاوب مع جميع الأجهزة
-- 🔍 بحث وتصفية المشاريع
-- ❤️ نظام الإعجابات
-- 👥 لوحة تحكم الإدارة
-- 🌙 وضع مظلم افتراضي
-
-## الفئات المتاحة
-
-- بوتات
-- سيرفرات  
-- أدوات
-- قوالب
-- مصممين
-
-## تقنيات المشروع
-
-- **Frontend**: React 18 + TypeScript
-- **Backend**: Express.js + Node.js  
-- **Database**: PostgreSQL + Drizzle ORM
-- **Authentication**: GitHub OAuth
-- **Styling**: Tailwind CSS + shadcn/ui
-- **Build**: Vite + ESBuild
+## 📋 التقنيات
+- React + TypeScript
+- Netlify Functions
+- MongoDB Atlas
+- GitHub OAuth
+- Tailwind CSS
