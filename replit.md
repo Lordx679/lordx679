@@ -129,6 +129,9 @@ This is a full-stack web application for showcasing and managing Discord-related
 - July 04, 2025. Updated session secret with secure production-ready value
 - July 04, 2025. Created comprehensive .env file with all production environment variables including MongoDB connection, GitHub OAuth, and admin configuration
 - July 04, 2025. Updated database URL to use correct MongoDB Atlas connection string with proper app name
+- July 04, 2025. Fixed GitHub OAuth authentication by resolving session storage conflict between PostgreSQL and MongoDB
+- July 04, 2025. Created new GitHub OAuth App (Client ID: Ov23lipN5ASsnC3ovIiv) with proper callback URLs for both Replit and Netlify
+- July 04, 2025. Switched session storage from PostgreSQL to memory store for development compatibility with MongoDB backend
 
 ## User Preferences
 
