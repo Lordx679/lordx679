@@ -2,22 +2,14 @@ import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import session from "express-session";
 import type { Express, RequestHandler } from "express";
-import connectPg from "connect-pg-simple";
 import { storage } from "./storage-mongodb";
 import config from "./config";
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  const pgStore = connectPg(session);
-  const sessionStore = new pgStore({
-    conString: process.env.DATABASE_URL,
-    createTableIfMissing: false,
-    ttl: sessionTtl,
-    tableName: "sessions",
-  });
+  // Use memory store for development since we're using MongoDB
   return session({
     secret: config.session.secret,
-    store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {
