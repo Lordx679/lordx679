@@ -86,7 +86,7 @@ export const GITHUB_CONFIG = {
 
 // Session Configuration
 export const SESSION_CONFIG = {
-  secret: process.env.SESSION_SECRET || "your-session-secret-key-change-this-in-production",
+  secret: process.env.SESSION_SECRET || "nuEdb4WjWWj/JQ5qex1mbx5Ia1cn11A0uXySXKAFlzQCJMy5URYBEHjy8uLGU4/vptQT6E+2gtlYjNevSbM06w==",
   name: process.env.SESSION_NAME || "discord-projects-session",
   maxAge: parseInt(process.env.SESSION_MAX_AGE || "86400000"), // 24 hours
   secure: process.env.NODE_ENV === "production",
