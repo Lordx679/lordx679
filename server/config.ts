@@ -99,8 +99,8 @@ function getCallbackURL() {
 }
 
 export const GITHUB_CONFIG = {
-  clientId: process.env.GITHUB_CLIENT_ID || "Ov23lihaX4CSTXNgP0F4",
-  clientSecret: process.env.GITHUB_CLIENT_SECRET || "05036e43f71f928b4b7b32584babbc0ba93d7546",
+  clientId: process.env.GITHUB_CLIENT_ID || "Ov23lipN5ASsnC3ovIiv",
+  clientSecret: process.env.GITHUB_CLIENT_SECRET || "7e87124cd44fba88996ac4e7ab1331937c10f4c1",
   callbackURL: getCallbackURL()
 };
 
